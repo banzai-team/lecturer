@@ -1,13 +1,13 @@
 import React from 'react';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
-import styled from "@emotion/styled";
+import { styled } from "@mui/material/styles";
 import {useNavigate} from "react-router";
 
 import {Head} from "../components/Head";
 import EmptyPage from "./EmptyPage";
 import {Routes} from "./router";
 
-const NameTableCell = styled(TableCell)(({theme}) => ({
+const NameTableCell = styled(TableCell)(() => ({
     fontSize: "16px",
     fontWeight: "bold"
 }));
@@ -42,7 +42,6 @@ const IndexPage: React.FC = () => {
             </Typography>
             <TableContainer component={Paper}>
                 <Table
-                    selectable={false}
                     sx={{minWidth: 650}}
                     aria-label="lectures table"
                     stickyHeader size="medium"
@@ -54,7 +53,7 @@ const IndexPage: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((row, key) => (
+                        {data.map((row) => (
                             <TableRow
                                 hover
                                 key={row.name}
