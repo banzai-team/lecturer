@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UploadedFile } from "src/file/file.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
 
 @Entity({
     name: 'lecture'
@@ -14,37 +15,19 @@ export class Lecture {
     })
     createdAt: Date;
 
-    @OneToOne(t => LectureText, lt => lt.lecture)
-    text: LectureText;
+    @Column({
+        name: 'lecture_name'
+    })
+    lectureName: string;
 
-    @OneToOne(t => UploadedFile, lt => lt.lecture)
-    file: UploadedFile;
+    @OneToOne(t => LectureText, lt => lt.lecture)
+    text: Relation<LectureText>;
+
+    @OneToOne(t => UploadedFile)
+    file: Relation<UploadedFile>;
 
     @OneToOne(t => Glossary, g => g.lecture)
-    glossary: Glossary;
-}
-
-@Entity({
-    name: 'uploaded_file'
-})
-export class UploadedFile {
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
-
-    @Column({
-        name: 'uploaded_at',
-        type: 'timestamp with time zone',
-        nullable: false
-    })
-    uploadedAt: Date;
-
-    @Column({
-        nullable: false
-    })
-    path: string;
-
-    @OneToOne(l => Lecture, l => l.file)
-    lecture: Lecture;
+    glossary: Relation<Glossary>;
 }
 
 @Entity({
@@ -62,10 +45,10 @@ export class Glossary {
     createdAt: Date;
 
     @OneToOne(l => Lecture, l => l.glossary)
-    lecture: Lecture;
+    lecture: Relation<Lecture>;
 
     @OneToMany(m => GlossaryItem, m => m.glossary)
-    items: GlossaryItem[];
+    items: Relation<GlossaryItem[]>;
 }
 
 @Entity({
@@ -82,7 +65,7 @@ export class GlossaryItem {
     meaning: string;
 
     @ManyToOne(c => Glossary, c => c.items)
-    glossary: Glossary;
+    glossary: Relation<Glossary>;
 }
 
 @Entity({
@@ -108,7 +91,7 @@ export class LectureText {
     lecture: Lecture;
 
     @OneToMany(m => LectureTextChunk, m => m.lectureText)
-    textChunks: LectureTextChunk[];
+    textChunks: Relation<LectureTextChunk[]>;
 }
 
 @Entity({
@@ -138,5 +121,5 @@ export class LectureTextChunk {
     to: number;
 
     @ManyToOne(c => LectureText, c => c.textChunks)
-    lectureText: LectureText;
+    lectureText: Relation<LectureText>;
 }

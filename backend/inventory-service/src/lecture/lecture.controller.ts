@@ -1,9 +1,12 @@
 import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { AnalyseStatus } from './lecture.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { LectureService } from './lecture.service';
+import { Lecture } from './lecture.entity';
 
 @Controller('lecture')
 export class LectureController {
+
+    constructor(private readonly lectureService: LectureService) {}
 
     @Get()
     async listLectures() {
@@ -15,33 +18,30 @@ export class LectureController {
     async createLecture(
         @UploadedFile() file: Express.Multer.File,
         @Body() {name}: CreateLectureRequest): Promise<LectureDto> {
+            const lecture = await this.lectureService.createLecture(name, file);
         return {
-            id: 88,
-            name,
-            analyseStatus: AnalyseStatus.NOT_STARTED
-        }
+            id: lecture.id,
+            name: lecture.lectureName,
+            createdAt: lecture.createdAt,
+            file: lecture?.file?.originalName
+        };
     }
 
     @Get(':id')
-    async getLecture(@Param() id: any): Promise<LectureDto> {
-        return {
-            id: 88,
-            name: 'Arrays',
-            analyseStatus: AnalyseStatus.NOT_STARTED,
-            recording: 'some_recording.mp3'
-        }
+    async getLecture(@Param() id: any): Promise<Lecture> {
+        return await this.lectureService.getLectureById(id);
     }
 
     
     @Post(':id/recording')
     @UseInterceptors(FileInterceptor('file'))
     async uploadLectureRecording(
-        @UploadedFile() file: Express.Multer.File,): Promise<LectureDto> {
+            @UploadedFile() file: Express.Multer.File,): Promise<LectureDto> {
         return {
             id: 88,
             name: 'Arrays',
-            analyseStatus: AnalyseStatus.NOT_STARTED,
-            recording: 'some_recording.mp3'
+            file: 'some_recording.mp3',
+            createdAt: new Date()
         }
     }
 
@@ -64,6 +64,6 @@ interface CreateLectureResponse {
 interface LectureDto {
     id: any
     name: string
-    recording?: string
-    analyseStatus: AnalyseStatus
+    file?: string
+    createdAt: Date
 }
