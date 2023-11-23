@@ -26,9 +26,6 @@ import { DataSourceOptions } from 'typeorm';
       useFactory: (configService: ConfigService) => ({connection: configService.get('bullMq')}),
       inject: [ConfigService],
     }),
-    BullModule.registerQueue({
-      name: 'transcode'
-    }),
     HealthModule,
     RecordingModule, 
     LectureModule, FileModule
