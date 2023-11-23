@@ -23,7 +23,7 @@ services:
       - redis
   
   db:
-    container_name: model-behavior-db
+    container_name: inventory
     image: postgres:15-alpine
     ports:
       - 5432:5432
