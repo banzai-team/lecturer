@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class InputBase(BaseModel):
-    text: str
+    file_path: str
 
 class OutputBase(BaseModel):
-    text: str
+    result: list[dict]
