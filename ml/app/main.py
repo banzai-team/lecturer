@@ -6,7 +6,7 @@ import logging
 
 
 app = FastAPI(title='ml service',
-              description='Fastapi service for marketing bot',
+              description='Fastapi service for lecture',
               version='0.1')
 
 # Adding v1 namespace route
