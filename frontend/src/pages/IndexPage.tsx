@@ -1,11 +1,21 @@
 import React from 'react';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
-import { styled } from "@mui/material/styles";
+import {
+    Container,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+} from "@mui/material";
+import {styled} from "@mui/material/styles";
 import {useNavigate} from "react-router";
 
 import {Head} from "../components/Head";
 import EmptyPage from "./EmptyPage";
 import {Routes} from "./router";
+import PageTitle from "../components/PageTitle";
 
 const NameTableCell = styled(TableCell)(() => ({
     fontSize: "16px",
@@ -37,39 +47,42 @@ const IndexPage: React.FC = () => {
     return (
         <>
             <Head title="Главная страница"/>
-            <Typography variant="h6" gutterBottom color="primary" fontWeight='fontWeightBold' align={"left"}>
-                Ваши лекции
-            </Typography>
-            <TableContainer component={Paper}>
-                <Table
-                    sx={{minWidth: 650}}
-                    aria-label="lectures table"
-                    stickyHeader size="medium"
-                >
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Название</TableCell>
-                            <TableCell align="right">Дата загрузки</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data.map((row) => (
-                            <TableRow
-                                hover
-                                key={row.name}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                onClick={() => onRowClick(row.id)}
-                                style={{cursor: "pointer"}}
-                            >
-                                <NameTableCell component="th">
-                                    {row.name}
-                                </NameTableCell>
-                                <DateTableCell align="right">{row.date}</DateTableCell>
+            <Container maxWidth="lg" >
+                <PageTitle>
+                    Ваши лекции
+                </PageTitle>
+
+                <TableContainer component={Paper}>
+                    <Table
+                        sx={{minWidth: 650}}
+                        aria-label="lectures table"
+                        stickyHeader size="medium"
+                    >
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Название</TableCell>
+                                <TableCell align="right">Дата загрузки</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {data.map((row) => (
+                                <TableRow
+                                    hover
+                                    key={row.name}
+                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                    onClick={() => onRowClick(row.id)}
+                                    style={{cursor: "pointer"}}
+                                >
+                                    <NameTableCell component="th">
+                                        {row.name}
+                                    </NameTableCell>
+                                    <DateTableCell align="right">{row.date}</DateTableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Container>
         </>
     );
 };

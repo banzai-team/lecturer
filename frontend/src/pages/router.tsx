@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import IndexPage from "./IndexPage"
 import MainLayout from "../components/MainLayout";
 import EmptyPage from "./EmptyPage";
+import LecturePage from "./LecturePage";
 
 
 export const  Routes = {
@@ -24,6 +25,10 @@ export const InnerRouter: React.FC = () => {
                 {
                     index: true,
                     element: <IndexPage/>,
+                },
+                {
+                    path: `${Routes.LECTURE}/:id`,
+                    element: <LecturePage/>,
                 }, {
                     path: '*',
                     element: <EmptyPage text="ERROR 404"/>,
