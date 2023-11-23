@@ -15,7 +15,7 @@ import { HealthModule } from './health/health.module';
       isGlobal: true,
     }),
     BullModule.forRootAsync({
-      useFactory: (configService: ConfigService) => configService.get('bullMq'),
+      useFactory: (configService: ConfigService) => ({connection: configService.get('bullMq')}),
       inject: [ConfigService],
     }),
     BullModule.registerQueue({
