@@ -14,6 +14,7 @@ import { Glossary, GlossaryItem, Lecture, LectureText, LectureTextChunk } from '
     })
   ],
   controllers: [InventoryController],
-  providers: [InventoryService]
+  providers: [InventoryService],
+  exports: [InventoryService]
 })
 export class InventoryModule {}

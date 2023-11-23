@@ -4,18 +4,22 @@ import { Logger } from "@nestjs/common";
 import { Job } from 'bullmq';
 import { TriggerAnalyse } from "../analyse.service";
 import { PostS2TFlowService } from "../producer/posts2t.flow";
+import { error } from "console";
+import { InventoryService } from "src/inventory/inventory.service";
 
 @Processor(SPEECH_TO_TEXT_QUEUE)
 export class SpeechToTextProcessor extends WorkerHost {
 
     private readonly logger = new Logger(SpeechToTextProcessor.name);
 
-    constructor(private readonly posts2tFlow: PostS2TFlowService) {
+    constructor(private readonly posts2tFlow: PostS2TFlowService,
+        private readonly inventoryService: InventoryService
+        ) {
         super();
     }
     
-    async process(job: Job<TriggerAnalyse, any, string>): Promise<any> {
-        this.logger.debug(`Processing s2t request::${job.data.uuid} file::${job.data.recording}`);
+    async process(job: Job<TriggerAnalyse, ModelS2tResponse[], string>): Promise<any> {
+        this.logger.debug(`Processing s2t request::${job.data.uuid} file::${job.data.lectureId}`);
         
         const chunks = await this.invokeSpeechToTextModel();
         
@@ -23,7 +27,7 @@ export class SpeechToTextProcessor extends WorkerHost {
         return chunks;
     }
 
-    private async invokeSpeechToTextModel() {
+    private async invokeSpeechToTextModel(): Promise<ModelS2tResponse[]> {
         return [
             {
                 timestamp: [0, 100],
@@ -33,9 +37,25 @@ export class SpeechToTextProcessor extends WorkerHost {
     }
 
     @OnWorkerEvent('completed')
-    onCompleted({data, returnvalue}) {
-        this.logger.debug(`on completed::${JSON.stringify(data)}`);
-        this.posts2tFlow.analyse()
+    async onCompleted(job: Job<TriggerAnalyse, ModelS2tResponse[], string>) {
+        const {data, returnvalue} = job;
+        this.logger.debug(`on completed::${JSON.stringify(data)} returnvalue::${JSON.stringify(returnvalue)}`);
+        
+        await this.inventoryService.createLectureTextChunks(data.lectureId, returnvalue.map(r => ({text: r.text, from: r.timestamp[0], to: r.timestamp[1]})));
+        
+        this.posts2tFlow.analyse();
         // do some stuff
     }
+
+    
+    @OnWorkerEvent('error')
+    onError({message}) {
+        this.logger.error(`An error occured::${message}`);
+        // do some stuff
+    }
+}
+
+export interface ModelS2tResponse {
+    timestamp: number[],
+    text: string
 }

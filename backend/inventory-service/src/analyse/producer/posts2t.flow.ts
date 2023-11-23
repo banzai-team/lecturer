@@ -1,4 +1,4 @@
-import { InjectFlowProducer } from "@nestjs/bullmq";
+import { InjectFlowProducer, OnWorkerEvent } from "@nestjs/bullmq";
 import { Injectable, Logger } from "@nestjs/common";
 import { FlowProducer } from 'bullmq';
 import { GLOSSARY_CHILD, LLM_CHILD, POST_SPEECH_TO_TEXT_FLOW, SPEECH_TO_TEXT_QUEUE, SUMMARIZER_CHILD } from "../contants";
@@ -37,6 +37,18 @@ export class PostS2TFlowService {
                 },
             ],
         });
+    }
+
+    @OnWorkerEvent('completed')
+    onCompleted() {
+        this.logger.debug('onCompleted...')
+        // do some stuff
+    }
+
+    @OnWorkerEvent('error')
+    onError({message}) {
+        this.logger.error(`An error occured::${message}`);
+        // do some stuff
     }
 }
 

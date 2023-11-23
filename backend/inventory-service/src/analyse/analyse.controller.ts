@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Post, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Inject, Param, Post, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AnalyseService } from './analyse.service';
 import { PostS2TFlowService } from './producer/posts2t.flow';
@@ -7,7 +7,7 @@ import { randomUUID } from 'crypto';
 @Controller('recording')
 export class AnalyseController {
 
-    constructor(private readonly recordingService: AnalyseService) { }
+    constructor(private readonly analyseService: AnalyseService) { }
 
     @Get('/download/:id')
     async downloadRecording() {
@@ -17,11 +17,11 @@ export class AnalyseController {
     }
 
     @Post(':id/analyse')
-    async analyse(): Promise<string> {
+    async analyse(@Param('id') id: string): Promise<string> {
         const subscriptionId = randomUUID();
-        await this.recordingService.analyse({
+        await this.analyseService.analyse({
             uuid: subscriptionId,
-            recording: 'abc.mp3'
+            lectureId: id
         });
         return subscriptionId;
     }

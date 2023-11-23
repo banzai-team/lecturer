@@ -16,12 +16,12 @@ export class AnalyseService {
 
     public async analyse(analyse: TriggerAnalyse) {
         this.logger.debug('analyse...')
-        const job = await this.s2tQueue.add('sample', analyse);
+        const job = await this.s2tQueue.add('analyse', analyse);
         this.logger.debug('added job to queue...')
     }
 }
 
 export interface TriggerAnalyse {
     uuid: string,
-    recording: string
+    lectureId: string
 }

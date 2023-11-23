@@ -18,4 +18,10 @@ export class PostSpeechToTextProcessor extends WorkerHost {
         this.logger.debug('onCompleted...')
         // do some stuff
     }
+    
+    @OnWorkerEvent('error')
+    onError({message}) {
+        this.logger.error(`An error occured::${message}`);
+        // do some stuff
+    }
 }

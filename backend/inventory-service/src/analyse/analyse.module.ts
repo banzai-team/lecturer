@@ -9,10 +9,11 @@ import { AnalyseService } from './analyse.service';
 import { LlmProcessor } from './processor/llm.processor';
 import { GlossaryProcessor } from './processor/glossary.processor';
 import { SummarizerProcessor } from './processor/summarizer.processor';
+import { InventoryModule } from 'src/inventory/inventory.module';
 // file --> s2t (chunks) --> summarizator model + glossary model + ?llm
 @Module({
   imports: [
-    
+    InventoryModule,
     BullModule.registerQueue({
       name: SPEECH_TO_TEXT_QUEUE
     }),
