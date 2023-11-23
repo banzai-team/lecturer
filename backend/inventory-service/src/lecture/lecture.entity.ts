@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
     name: 'lecture'
@@ -13,6 +13,15 @@ export class Lecture {
         nullable: false
     })
     createdAt: Date;
+
+    @OneToOne(t => LectureText, lt => lt.lecture)
+    text: LectureText;
+
+    @OneToOne(t => UploadedFile, lt => lt.lecture)
+    file: UploadedFile;
+
+    @OneToOne(t => Glossary, g => g.lecture)
+    glossary: Glossary;
 }
 
 @Entity({
@@ -33,6 +42,9 @@ export class UploadedFile {
         nullable: false
     })
     path: string;
+
+    @OneToOne(l => Lecture, l => l.file)
+    lecture: Lecture;
 }
 
 @Entity({
@@ -48,6 +60,12 @@ export class Glossary {
         nullable: false
     })
     createdAt: Date;
+
+    @OneToOne(l => Lecture, l => l.glossary)
+    lecture: Lecture;
+
+    @OneToMany(m => GlossaryItem, m => m.glossary)
+    items: GlossaryItem[];
 }
 
 @Entity({
@@ -62,6 +80,9 @@ export class GlossaryItem {
 
     @Column()
     meaning: string;
+
+    @ManyToOne(c => Glossary, c => c.items)
+    glossary: Glossary;
 }
 
 @Entity({
@@ -78,8 +99,16 @@ export class LectureText {
     })
     createdAt: Date;
 
-    @Column()
+    @Column({
+        type: 'text'
+    })
     content: string;
+
+    @OneToOne(l => Lecture, l => l.text)
+    lecture: Lecture;
+
+    @OneToMany(m => LectureTextChunk, m => m.lectureText)
+    textChunks: LectureTextChunk[];
 }
 
 @Entity({
@@ -107,4 +136,7 @@ export class LectureTextChunk {
         type: 'int'
     })
     to: number;
+
+    @ManyToOne(c => LectureText, c => c.textChunks)
+    lectureText: LectureText;
 }
