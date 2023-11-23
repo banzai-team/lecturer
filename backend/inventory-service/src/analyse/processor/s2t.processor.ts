@@ -2,7 +2,7 @@ import { OnWorkerEvent, Processor, WorkerHost } from "@nestjs/bullmq";
 import { POST_SPEECH_TO_TEXT_FLOW, SPEECH_TO_TEXT_QUEUE } from "../contants";
 import { Logger } from "@nestjs/common";
 import { Job } from 'bullmq';
-import { TriggerAnalyse } from "../recording.service";
+import { TriggerAnalyse } from "../analyse.service";
 import { PostS2TFlowService } from "../producer/posts2t.flow";
 
 @Processor(SPEECH_TO_TEXT_QUEUE)

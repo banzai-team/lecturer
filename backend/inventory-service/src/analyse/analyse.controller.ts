@@ -1,13 +1,13 @@
 import { Controller, Get, Inject, Post, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { RecordingService } from './recording.service';
+import { AnalyseService } from './analyse.service';
 import { PostS2TFlowService } from './producer/posts2t.flow';
 import { randomUUID } from 'crypto';
 
 @Controller('recording')
-export class RecordingController {
+export class AnalyseController {
 
-    constructor(private readonly recordingService: RecordingService) { }
+    constructor(private readonly recordingService: AnalyseService) { }
 
     @Get('/download/:id')
     async downloadRecording() {
@@ -17,11 +17,13 @@ export class RecordingController {
     }
 
     @Post(':id/analyse')
-    async analyse() {
+    async analyse(): Promise<string> {
+        const subscriptionId = randomUUID();
         await this.recordingService.analyse({
-            uuid: randomUUID(),
+            uuid: subscriptionId,
             recording: 'abc.mp3'
         });
+        return subscriptionId;
     }
 
 }

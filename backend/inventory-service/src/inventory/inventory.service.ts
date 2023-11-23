@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Lecture } from './lecture.entity';
+import { Lecture } from './inventory.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { randomUUID } from 'crypto';
 import { FileService } from 'src/file/file.service';
 
 @Injectable()
-export class LectureService {
+export class InventoryService {
 
-    private readonly logger = new Logger(LectureService.name);
+    private readonly logger = new Logger(InventoryService.name);
 
     constructor(
         private readonly fileService: FileService,

@@ -2,12 +2,13 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SPEECH_TO_TEXT_QUEUE } from './contants';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
+import { InjectRepository } from '@nestjs/typeorm';
 
 
 @Injectable()
-export class RecordingService {
+export class AnalyseService {
 
-    private readonly logger = new Logger(RecordingService.name);
+    private readonly logger = new Logger(AnalyseService.name);
 
     constructor(
         @InjectQueue(SPEECH_TO_TEXT_QUEUE) private readonly s2tQueue: Queue

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { LectureController } from './lecture.controller';
-import { LectureService } from './lecture.service';
+import { InventoryController } from './inventory.controller';
+import { InventoryService } from './inventory.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { FileModule } from 'src/file/file.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Glossary, GlossaryItem, Lecture, LectureText, LectureTextChunk } from './lecture.entity';
+import { Glossary, GlossaryItem, Lecture, LectureText, LectureTextChunk } from './inventory.entity';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { Glossary, GlossaryItem, Lecture, LectureText, LectureTextChunk } from '
       dest: 'uploads'
     })
   ],
-  controllers: [LectureController],
-  providers: [LectureService]
+  controllers: [InventoryController],
+  providers: [InventoryService]
 })
-export class LectureModule {}
+export class InventoryModule {}

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { RecordingController } from './recording.controller';
+import { AnalyseController } from './analyse.controller';
 import { BullModule } from '@nestjs/bullmq';
 import { POST_SPEECH_TO_TEXT_FLOW, SPEECH_TO_TEXT_QUEUE } from './contants';
-import { RecordingProcessor } from './processor/posts2t.processor';
+import { PostSpeechToTextProcessor } from './processor/posts2t.processor';
 import { PostS2TFlowService } from './producer/posts2t.flow';
 import { SpeechToTextProcessor } from './processor/s2t.processor';
-import { RecordingService } from './recording.service';
+import { AnalyseService } from './analyse.service';
 import { LlmProcessor } from './processor/llm.processor';
 import { GlossaryProcessor } from './processor/glossary.processor';
 import { SummarizerProcessor } from './processor/summarizer.processor';
@@ -20,10 +20,10 @@ import { SummarizerProcessor } from './processor/summarizer.processor';
       name: POST_SPEECH_TO_TEXT_FLOW
     })
   ],
-  controllers: [RecordingController],
+  controllers: [AnalyseController],
   providers: [
-    RecordingService, 
-    RecordingProcessor, 
+    AnalyseService, 
+    PostSpeechToTextProcessor, 
     SpeechToTextProcessor,
     PostS2TFlowService,
     GlossaryProcessor,
@@ -31,4 +31,4 @@ import { SummarizerProcessor } from './processor/summarizer.processor';
     SummarizerProcessor
   ]
 })
-export class RecordingModule {}
+export class AnalyseModule {}

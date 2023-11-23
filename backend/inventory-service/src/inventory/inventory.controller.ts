@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { LectureService } from './lecture.service';
-import { Lecture } from './lecture.entity';
+import { InventoryService } from './inventory.service';
+import { Lecture } from './inventory.entity';
 
 @Controller('lecture')
-export class LectureController {
+export class InventoryController {
 
-    constructor(private readonly lectureService: LectureService) {}
+    constructor(private readonly lectureService: InventoryService) {}
 
     @Get()
     async listLectures() {
