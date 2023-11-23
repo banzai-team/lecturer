@@ -47,3 +47,5 @@ argo-cd:
 #        - argocd.ewolke.io
 
 apps:
+  geekbrains-frontend:
+    container: banzai-frontend
