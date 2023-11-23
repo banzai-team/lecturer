@@ -4,6 +4,7 @@ import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress';
 
 import IndexPage from "./IndexPage"
+import MainLayout from "../components/MainLayout";
 
 
 export const  Routes = {
@@ -15,7 +16,7 @@ export const InnerRouter: React.FC = () => {
         {
             path: '/',
             // TODO: add layout component
-            element: <div><Outlet/></div>,
+            element: <MainLayout />,
             children: [
                 {
                     index: true,
