@@ -50,4 +50,4 @@ apps:
   geekbrains-frontend:
     container: banzai-frontend
   geekbrains-backend:
-    container: banzai-backend
+    container: banzai-inventory-service
