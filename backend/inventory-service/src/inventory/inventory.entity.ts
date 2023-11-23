@@ -20,17 +20,25 @@ export class Lecture {
     })
     lectureName: string;
 
-    @OneToOne(t => LectureText, lt => lt.lecture)
+    @OneToOne(t => LectureText, lt => lt.lecture, {
+        cascade: true
+    })
     text: Relation<LectureText>;
 
     @JoinColumn({ name: "file_id" })
-    @OneToOne(t => UploadedFile)
+    @OneToOne(t => UploadedFile, {
+        cascade: true
+    })
     file: Relation<UploadedFile>;
 
-    @OneToOne(t => Glossary, g => g.lecture)
+    @OneToOne(t => Glossary, g => g.lecture, {
+        cascade: true
+    })
     glossary: Relation<Glossary>;
 
-    @OneToMany(m => LectureTextChunk, m => m.lecture)
+    @OneToMany(m => LectureTextChunk, m => m.lecture, {
+        cascade: true
+    })
     textChunks: Relation<LectureTextChunk[]>;
 }
 
@@ -49,7 +57,9 @@ export class Glossary {
     createdAt: Date;
 
     @JoinColumn({ name: "lecture_id" })
-    @OneToOne(l => Lecture, l => l.glossary)
+    @OneToOne(l => Lecture, l => l.glossary, {
+        orphanedRowAction: 'delete'
+    })
     lecture: Relation<Lecture>;
 
     @OneToMany(m => GlossaryItem, m => m.glossary)
@@ -93,10 +103,10 @@ export class LectureText {
     content: string;
 
     @JoinColumn({ name: "lecture_id" })
-    @OneToOne(l => Lecture, l => l.text)
+    @OneToOne(l => Lecture, l => l.text, {
+        orphanedRowAction: "delete"
+    })
     lecture: Lecture;
-
-
 }
 
 @Entity({
@@ -125,6 +135,8 @@ export class LectureTextChunk {
     })
     to: number;
 
-    @ManyToOne(c => Lecture, c => c.textChunks)
+    @ManyToOne(c => Lecture, c => c.textChunks, {
+        orphanedRowAction: "delete"
+    })
     lecture: Relation<Lecture>;
 }
