@@ -1,4 +1,4 @@
-gitRepo: git@github.com:banzai-team/marketing_bot.git
+gitRepo: git@github.com:banzai-team/lecturer.git
 env: staging
 
 argo-cd:
@@ -47,15 +47,5 @@ argo-cd:
 #        - argocd.ewolke.io
 
 apps:
-  gazprom-api-gateway:
-    container: banzai-api-gateway
-  gazprom-frontend:
-    container: banzai-frontend
-  gazprom-ml-service:
-    container: banzai-ml
-  gazprom-model-behavior:
-    container: banzai-model-behavior
-  gazprom-model-interceptor:
-    container: banzai-model-interceptor
 #  gazprom-user-feedback:
 #    container: banzai-user-feedback

@@ -10,9 +10,7 @@ spec:
         revision: HEAD
         directories:
           - path: "k8s-apps/charts/*"
-          - path: "k8s-apps/charts/ingress-nginx"
-            exclude: true
-          - path: "k8s-apps/charts/gazprom-*"
+          - path: "k8s-apps/charts/geekbrains-*"
             exclude: true
 {{/*          - path: "k8s-apps/charts/rabbitmq"*/}}
 {{/*            exclude: true*/}}
