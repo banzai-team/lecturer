@@ -73,7 +73,7 @@ export class InventoryService {
             lectureText.createdAt = new Date();
             lectureText.content =  chunks.map(c => c.text).join();
             lectureText.lecture = lecture;
-            const chunkModels = chunks.map((c, i) => {
+            lecture.textChunks = chunks.map((c, i) => {
                 const chunk = new LectureTextChunk();
                 chunk.order = i;
                 chunk.from = c.from;
@@ -81,9 +81,9 @@ export class InventoryService {
                 chunk.content = c.text;
                 chunk.lecture = lecture;
                 return chunk;
-            })
-            await this.lectureTextChunkRepository.save(chunkModels);
-            await this.lectureTextRepository.save(lectureText);
+            });
+            lecture.text = lectureText;
+            await this.lectureRepository.save(lecture);
         } else {
             throw new Error(`Lecture::${lectureId} was not found`);
         }
