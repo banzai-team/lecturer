@@ -1,5 +1,0 @@
-argo-cd:
-  repoServer:
-    containerSecurityContext:
-      seccompProfile:
-        type: Unconfined
