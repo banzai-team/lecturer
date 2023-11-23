@@ -1,15 +1,15 @@
-#name: Backend CI workflow
-#on:
-#  workflow_dispatch:
-#  push:
-#    paths:
-#      - 'backend/service1/**'
-#      - '.github/workflows/backend.yaml'
-#    branches:
-#      - main
-#  pull_request:
-#    paths:
-#      - 'backend/service1/**'
+name: Backend CI workflow
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'backend/service1/**'
+      - '.github/workflows/backend.yaml'
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'backend/service1/**'
 #permissions:
 #  contents: write
 #
