@@ -1,5 +1,5 @@
 import { UploadedFile } from "src/file/file.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
 
 @Entity({
     name: 'lecture'
@@ -23,11 +23,15 @@ export class Lecture {
     @OneToOne(t => LectureText, lt => lt.lecture)
     text: Relation<LectureText>;
 
+    @JoinColumn({ name: "file_id" })
     @OneToOne(t => UploadedFile)
     file: Relation<UploadedFile>;
 
     @OneToOne(t => Glossary, g => g.lecture)
     glossary: Relation<Glossary>;
+
+    @OneToMany(m => LectureTextChunk, m => m.lecture)
+    textChunks: Relation<LectureTextChunk[]>;
 }
 
 @Entity({
@@ -44,6 +48,7 @@ export class Glossary {
     })
     createdAt: Date;
 
+    @JoinColumn({ name: "lecture_id" })
     @OneToOne(l => Lecture, l => l.glossary)
     lecture: Relation<Lecture>;
 
@@ -87,11 +92,11 @@ export class LectureText {
     })
     content: string;
 
+    @JoinColumn({ name: "lecture_id" })
     @OneToOne(l => Lecture, l => l.text)
     lecture: Lecture;
 
-    @OneToMany(m => LectureTextChunk, m => m.lectureText)
-    textChunks: Relation<LectureTextChunk[]>;
+
 }
 
 @Entity({
@@ -120,6 +125,6 @@ export class LectureTextChunk {
     })
     to: number;
 
-    @ManyToOne(c => LectureText, c => c.textChunks)
-    lectureText: Relation<LectureText>;
+    @ManyToOne(c => Lecture, c => c.textChunks)
+    lecture: Relation<Lecture>;
 }
