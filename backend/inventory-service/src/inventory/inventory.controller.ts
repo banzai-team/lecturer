@@ -4,7 +4,7 @@ import { InventoryService } from './inventory.service';
 import { Lecture } from './inventory.entity';
 import { Page } from 'src/commons/page';
 
-@Controller('lecture')
+@Controller('inventory')
 export class InventoryController {
 
     constructor(private readonly inventoryService: InventoryService) { }
