@@ -5,9 +5,9 @@ import {Routes} from "../pages/router";
 
 const MainLayout: React.FC = () => {
     return (
-        <Box>
-            <AppBar component="nav" position="sticky" color={"secondary"}>
-                <Container maxWidth="xl">
+            <Box minHeight="100vh" bgcolor="secondary.light">
+            <AppBar component="nav" position="sticky" color={"secondary"} >
+                <Container maxWidth="xl" >
                     <Toolbar disableGutters>
                         <Link to={Routes.ROOT}>
                             <img src={"/logo.png"} alt="logo" width={150}/>
@@ -15,9 +15,11 @@ const MainLayout: React.FC = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            <Box maxWidth="xl" component="main" padding={4}>
-                <Outlet/>
-            </Box>
+            <Container maxWidth="lg" component="main" >
+                <Box paddingY={4} >
+                    <Outlet/>
+                </Box>
+            </Container>
         </Box>
     );
 };

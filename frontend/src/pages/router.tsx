@@ -10,9 +10,10 @@ import EmptyPage from "./EmptyPage";
 
 export const  Routes = {
     ROOT: "/",
+    LECTURE: "/lecture",
 };
 
-const Loading = () => <EmptyPage><CircularProgress/></EmptyPage>;
+const Loading = () => <EmptyPage><CircularProgress color="primary"/></EmptyPage>;
 
 export const InnerRouter: React.FC = () => {
     const routes: RouteObject[] = [
