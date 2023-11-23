@@ -4,6 +4,6 @@ SCRIPT_DIR=$(dirname "$0")
 #    helm package -u $d -d ./packaged-charts
 #done
 
-helm package -u $SCRIPT_DIR/charts/gazprom-mrkt -d ./packaged-charts
+helm package -u $SCRIPT_DIR/charts/geekbrains-lecturer -d ./packaged-charts
 
-helm repo index ./packaged-charts --url https://gazprom-charts.obs.ru-moscow-1.hc.sbercloud.ru
+helm repo index ./packaged-charts --url https://geekbrains-charts.obs.ru-moscow-1.hc.sbercloud.ru

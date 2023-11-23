@@ -47,5 +47,3 @@ argo-cd:
 #        - argocd.ewolke.io
 
 apps:
-#  gazprom-user-feedback:
-#    container: banzai-user-feedback
