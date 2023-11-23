@@ -1,5 +1,5 @@
 import React, {Suspense} from "react";
-import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
+import { RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
