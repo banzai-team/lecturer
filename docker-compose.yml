@@ -14,9 +14,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: ${BEHAVIOR_DB_USER}
-      POSTGRES_PASSWORD: ${BEHAVIOR_DB_PASSWORD}
-      POSTGRES_DB: ${BEHAVIOR_DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     restart: always
 
   rmq:
