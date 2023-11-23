@@ -49,3 +49,5 @@ argo-cd:
 apps:
   geekbrains-frontend:
     container: banzai-frontend
+  geekbrains-backend:
+    container: banzai-backend
