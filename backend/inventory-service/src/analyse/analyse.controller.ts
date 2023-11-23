@@ -4,7 +4,7 @@ import { AnalyseService } from './analyse.service';
 import { PostS2TFlowService } from './producer/posts2t.flow';
 import { randomUUID } from 'crypto';
 
-@Controller('recording')
+@Controller('analyse')
 export class AnalyseController {
 
     constructor(private readonly analyseService: AnalyseService) { }
@@ -16,7 +16,7 @@ export class AnalyseController {
         }
     }
 
-    @Post(':id/analyse')
+    @Post('lecture/:id')
     async analyse(@Param('id') id: string): Promise<string> {
         const subscriptionId = randomUUID();
         await this.analyseService.analyse({
