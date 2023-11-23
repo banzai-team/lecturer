@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {useState} from 'react'
 import './App.css'
-import ButtonUsage from "./components/Buttons.tsx";
+
+import {Router} from "./pages/router";
+import {HelmetProvider} from "react-helmet-async";
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <ButtonUsage />
-    </>
+      <HelmetProvider>
+          <Router/>
+      </HelmetProvider>
   )
 }
 
