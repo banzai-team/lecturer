@@ -4,12 +4,12 @@ import { InventoryService } from './inventory.service';
 import { Lecture } from './inventory.entity';
 import { Page } from 'src/commons/page';
 
-@Controller('lecture')
+@Controller('inventory')
 export class InventoryController {
 
     constructor(private readonly inventoryService: InventoryService) { }
 
-    @Get()
+    @Get('lecture')
     async listLectures(
         @Query('offset') offset: number = 0,
         @Query('size',) size: number = 10): Promise<Page<Lecture>> {
@@ -21,7 +21,7 @@ export class InventoryController {
             })
     }
 
-    @Post()
+    @Post('/lecture')
     @UseInterceptors(FileInterceptor('file'))
     async createLecture(
         @UploadedFile() file: Express.Multer.File,
@@ -30,13 +30,13 @@ export class InventoryController {
         return lecture;
     }
 
-    @Get(':id')
+    @Get('lecture/:id')
     async getLecture(@Param('id') id: any): Promise<Lecture> {
         return await this.inventoryService.getLectureById(id);
     }
 
 
-    @Post(':id/recording')
+    @Post('lecture/:id/recording')
     @UseInterceptors(FileInterceptor('file'))
     async uploadLectureRecording(
         @UploadedFile() file: Express.Multer.File,): Promise<LectureDto> {

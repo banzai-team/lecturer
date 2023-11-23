@@ -1,17 +1,18 @@
-import {useState} from 'react'
-import './App.css'
+import {ThemeProvider} from "@mui/material";
 
+import './App.css'
 import {Router} from "./pages/router";
 import {HelmetProvider} from "react-helmet-async";
+import {theme} from "./theme";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-      <HelmetProvider>
-          <Router/>
-      </HelmetProvider>
-  )
+    return (
+        <ThemeProvider theme={theme}>
+            <HelmetProvider>
+                <Router/>
+            </HelmetProvider>
+        </ThemeProvider>
+    )
 }
 
 export default App

@@ -1,35 +1,39 @@
 import React, {Suspense} from "react";
-import { Outlet, RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
+import { RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
 import IndexPage from "./IndexPage"
+import MainLayout from "../components/MainLayout";
+import EmptyPage from "./EmptyPage";
 
 
 export const  Routes = {
     ROOT: "/",
+    LECTURE: "/lecture",
 };
+
+const Loading = () => <EmptyPage><CircularProgress color="primary"/></EmptyPage>;
 
 export const InnerRouter: React.FC = () => {
     const routes: RouteObject[] = [
         {
             path: '/',
-            // TODO: add layout component
-            element: <div><Outlet/></div>,
+            element: <MainLayout />,
             children: [
                 {
                     index: true,
                     element: <IndexPage/>,
                 }, {
                     path: '*',
-                    element: <div>ERROR 404</div>, // TODO: add error screen
+                    element: <EmptyPage text="ERROR 404"/>,
                 },
             ],
         }
     ];
     const element = useRoutes(routes);
     return (
-        <Suspense fallback={<CircularProgress/>}>{element}</Suspense>
+        <Suspense fallback={<Loading/>}>{element}</Suspense>
     );
 }
 
