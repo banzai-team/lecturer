@@ -18,6 +18,9 @@ import { HealthModule } from './health/health.module';
       useFactory: (configService: ConfigService) => configService.get('bullMq'),
       inject: [ConfigService],
     }),
+    BullModule.registerQueue({
+      name: 'transcode'
+    }),
     HealthModule,
     RecordingModule, 
     LectureModule
