@@ -44,8 +44,8 @@ jobs:
 
   deploy-container-yc:
     if: github.ref == 'refs/heads/main'
-    needs:
-      - build
+#    needs:
+#      - build
     runs-on: ubuntu-latest
     defaults:
       run:
