@@ -18,6 +18,10 @@ import EmptyPage from "./EmptyPage";
 import {Routes} from "./router";
 import PageTitle from "../components/PageTitle";
 import AddButton from "../components/AddButton";
+import {useQuery} from "react-query";
+import {getLectures} from "../domain/api";
+import CircularProgress from "@mui/material/CircularProgress";
+import {formData} from "../utils/DateUtils";
 
 const NameTableCell = styled(TableCell)(() => ({
     fontSize: "16px",
@@ -32,13 +36,17 @@ const IndexPage: React.FC = () => {
     const navigate = useNavigate();
     const onRowClick = (id: string | number) => navigate(`${Routes.LECTURE}/${id}`);
 
+    const {data: lectures, isLoading} = useQuery(["getLectures"], () => getLectures());
 
-    // DATA NOT FROM API ! ! !
-    const data = [
-        {id: 1, name: "My best lecture", date: "10.11.2023"},
-        {id: 3, name: "foooooo", date: "16.11.2023"},
-        {id: 15, name: "like", date: "10.10.2023"},
-    ];
+    if (isLoading) {
+        return (
+            <EmptyPage>
+                <CircularProgress color="primary"/>
+            </EmptyPage>
+        )
+    }
+
+    const data = lectures?.data.content;
 
     if (!data || !data.length) {
         return <EmptyPage text="Вы еще не загрузили ни одной лекции">
@@ -74,15 +82,17 @@ const IndexPage: React.FC = () => {
                             {data.map((row) => (
                                 <TableRow
                                     hover
-                                    key={row.name}
+                                    key={row.id}
                                     sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     onClick={() => onRowClick(row.id)}
                                     style={{cursor: "pointer"}}
                                 >
                                     <NameTableCell component="th">
-                                        {row.name}
+                                        {row.lectureName}
                                     </NameTableCell>
-                                    <DateTableCell align="right">{row.date}</DateTableCell>
+                                    <DateTableCell align="right">
+                                        {formData(row.createdAt)}
+                                    </DateTableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

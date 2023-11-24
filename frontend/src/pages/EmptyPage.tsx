@@ -7,7 +7,15 @@ type EmptyPageProps = {
 }
 const EmptyPage: React.FC<EmptyPageProps> = ({text, children}) => {
     return (
-        <Container sx={{ paddingTop: 10, textAlign: "center" }}>
+        <Container
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+                textAlign: "center"
+        }}>
             {
                 text ? (
                     <Typography variant="h6" gutterBottom color="primary" fontWeight='fontWeightBold'>
