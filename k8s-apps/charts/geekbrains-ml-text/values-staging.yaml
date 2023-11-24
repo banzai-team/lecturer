@@ -1,3 +1,3 @@
 extraEnv:
   - name: MODEL_URL
-    value: test.com
+    value: https://storage.yandexcloud.net/geekbrains-models/models.tar.gz
