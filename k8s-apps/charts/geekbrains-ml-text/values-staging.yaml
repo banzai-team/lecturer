@@ -1,0 +1,3 @@
+extraEnv:
+  - name: MODEL_URL
+    value: test.com

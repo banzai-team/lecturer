@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-text
+  repository: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-lecturer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 ingress:
   enabled: false
@@ -80,3 +80,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+extraEnv: []
