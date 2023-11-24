@@ -55,6 +55,6 @@ def process_base_mocker(input_: InputSum) -> OutputSum:
              tags=['Inference endpoints'],
              status_code=status.HTTP_200_OK,
              response_model=OutputCl)
-def sum_(input_: InputCl) -> OutputCl:
+def cl_(input_: InputCl) -> OutputCl:
      result = classification_pipe(input_.text)
      return OutputCl(result=result)
