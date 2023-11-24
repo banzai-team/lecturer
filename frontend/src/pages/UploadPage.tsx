@@ -2,7 +2,7 @@ import React from "react";
 
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {Box, Button, Container, Paper, TextField} from "@mui/material";
+import {Box, Container, Paper, TextField} from "@mui/material";
 
 import {Head} from "../components/Head";
 import Dropzone from "../components/Dropzone";
@@ -13,6 +13,8 @@ import {uploadFile} from '../domain/api';
 import {useMutation} from "react-query";
 import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import {LoadingButton} from "@mui/lab";
+import {useNavigate} from "react-router";
 
 const validationMessage = "Обязательное поле";
 
@@ -21,9 +23,11 @@ const validationSchema = Yup.object({
 });
 
 const UploadPage: React.FC = () => {
+    const navigate = useNavigate();
+
     const send = useMutation(uploadFile, {
         onSuccess: (data) => {
-            console.log('File sent', data.status)
+            navigate(`${Routes.LECTURE}/${data.data.id}`);
         }
     });
 
@@ -91,7 +95,7 @@ const UploadPage: React.FC = () => {
                                             onDrop={(acceptedFiles: any[]) => {
                                                 acceptedFiles.forEach((file) => {
                                                     const reader = new FileReader()
-    
+
                                                     reader.onabort = () => console.log('file reading was aborted')
                                                     reader.onerror = () => console.log('file reading has failed')
                                                     reader.onload = () => {
@@ -108,13 +112,15 @@ const UploadPage: React.FC = () => {
                                 <Box flex={1}>
                                     <p>Добавьте файл с данными.</p>
                                     <p>Вы можeте добавить только файлы в формате .mp3</p>
-                                    <Button
+                                    <LoadingButton
                                         type="submit"
+                                        loading={send.isLoading}
+                                        loadingPosition="center"
                                         variant="contained"
                                         disabled={!hasFile}
                                     >
                                         Загрузить
-                                    </Button>
+                                    </LoadingButton>
                                 </Box>
                             </Box>
                         </Box>
@@ -126,3 +132,4 @@ const UploadPage: React.FC = () => {
 };
 
 export default UploadPage;
+
