@@ -25,7 +25,7 @@ export class InventoryController {
     @UseInterceptors(FileInterceptor('file'))
     async createLecture(
         @UploadedFile() file: Express.Multer.File,
-        @Body() { name }: CreateLectureRequest): Promise<Lecture> {
+        @Body() { name }): Promise<Lecture> {
         const lecture = await this.inventoryService.createLecture(name, file);
         return lecture;
     }
@@ -35,22 +35,9 @@ export class InventoryController {
         return await this.inventoryService.getLectureById(id);
     }
 
-
-    @Post('lecture/:id/recording')
-    @UseInterceptors(FileInterceptor('file'))
-    async uploadLectureRecording(
-        @UploadedFile() file: Express.Multer.File,): Promise<LectureDto> {
-        return {
-            id: 88,
-            name: 'Arrays',
-            file: 'some_recording.mp3',
-            createdAt: new Date()
-        }
-    }
-
     @Post('glossary')
-    async createGlossary( @Body() { lectureId }): Promise<any> {
-        const glossary =  await this.inventoryService.createGlossary(lectureId, []);
+    async createGlossary(@Body() { lectureId }): Promise<any> {
+        const glossary = await this.inventoryService.createGlossary(lectureId, []);
         return {
             id: glossary.id,
             createdAt: glossary.createdAt
@@ -79,21 +66,12 @@ export class InventoryController {
             meaning: item.meaning
         }
     }
-}
 
-interface CreateLectureRequest {
-    name: string
-}
-
-
-interface CreateLectureResponse {
-    id: any
-    name: string
-}
-
-interface LectureDto {
-    id: any
-    name: string
-    file?: string
-    createdAt: Date
+    @Post('lecture/:id/text-chunks')
+    async createTextChunks(@Param('id') lectureId: string,
+        @Body() chunks: [{ content: string, from: number, to: number }]
+    ) {
+        const lecture = await this.inventoryService.createLectureTextChunks(lectureId, chunks);
+        return lecture.textChunks.map(c => ({id: c.id, from: c.from, to: c.to, order: c.order, content: c.content}));
+    }
 }

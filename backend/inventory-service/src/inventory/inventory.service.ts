@@ -62,7 +62,7 @@ export class InventoryService {
         })
     }
 
-    async createLectureTextChunks(lectureId: string, chunks: {text:string, from: number, to: number}[]) {
+    async createLectureTextChunks(lectureId: string, chunks: {content:string, from: number, to: number}[]): Promise<Lecture> {
         if (await this.lectureRepository.exist({
             where: {
                 id: lectureId
@@ -84,21 +84,21 @@ export class InventoryService {
 
             const lectureText: LectureText = new LectureText();
             lectureText.createdAt = new Date();
-            lectureText.content =  chunks.map(c => c.text).join();
+            lectureText.content =  chunks.map(c => c.content).join();
             lectureText.lecture = lecture;
             lecture.textChunks = chunks.map((c, i) => {
                 const chunk = new LectureTextChunk();
                 chunk.order = i;
                 chunk.from = c.from;
                 chunk.to = c.to;
-                chunk.content = c.text;
+                chunk.content = c.content;
                 chunk.lecture = lecture;
                 return chunk;
             });
             lecture.text = lectureText;
-            await this.lectureRepository.save(lecture);
+            return await this.lectureRepository.save(lecture);
         } else {
-            throw new Error(`Lecture::${lectureId} was not found`);
+            throw new HttpException(`Lecture::${lectureId} was not found`, 404);
         }
     }
 

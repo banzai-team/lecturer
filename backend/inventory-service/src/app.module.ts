@@ -30,10 +30,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql'
     }),
-    BullModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({connection: configService.get('bullMq')}),
-      inject: [ConfigService],
-    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'uploads'),
     }),

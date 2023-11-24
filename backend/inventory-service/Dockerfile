@@ -24,7 +24,7 @@ COPY --from=builder /app/package.json .
 COPY --from=builder /app/dist .
 COPY --from=deps-builder /node_modules ./node_modules
 
-RUN apt update && apt install -y ffmpeg
+# RUN apt update && apt install -y ffmpeg
 
 EXPOSE 3000
 
