@@ -51,3 +51,5 @@ apps:
     container: banzai-frontend
   geekbrains-backend:
     container: banzai-inventory-service
+  geekbrains-ml-text:
+    container: banzai-ml-lecturer

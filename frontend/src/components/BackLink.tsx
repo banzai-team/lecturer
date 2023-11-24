@@ -9,13 +9,15 @@ type BackLinkProps = {
     to: string,
 }
 
-const Back = styled(Link)(() => ({
+const Back = styled(Link)(({theme}) => ({
     display: "flex",
     justifyContent: "start",
     alignItems: "center",
     fontSize: "12px",
     lineHeight: "12px",
-    marginBottom: 2
+    marginBottom: 2,
+    color: theme.palette.secondary.main,
+    width: "max-content"
 }));
 
 const BackLink: React.FC<BackLinkProps> = ({children, to}) => (

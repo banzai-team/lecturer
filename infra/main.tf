@@ -58,5 +58,20 @@ module "kube" {
         environment = "app"
       }
     },
+    "yc-k8s-gpu-01" = {
+      node_gpus = 1
+      platform_id = "standard-v3-t4"
+      node_cores      = 8
+      node_memory     = 32
+#      preemptible = true
+      description = "Kubernetes nodes group for GPU"
+      fixed_scale = {
+        size = 1
+      }
+      node_labels = {
+        role        = "worker-gpu"
+        environment = "app"
+      }
+    },
   }
 }

@@ -17,17 +17,19 @@ export class FileService {
 
     public async saveFile(
         buffer: Buffer,
+        folder: string,
         filename: string,
         extension: string
     ): Promise<UploadedFile> {
         this.logger.debug(`Saving file::${filename} mimetype::${extension}...`);
         const file = new UploadedFile()
+        const dir = join(this.options.dest, folder);
         file.id = randomUUID();
-        file.path = this.options.dest;
+        const savePath = join(dir, `${filename}${file.id}.${extension}`);
+        file.path = join(folder, `${filename}${file.id}.${extension}`);
         file.originalName = filename;
         file.uploadedAt = new Date();
-        const savePath = join(this.options.dest, `${filename}${file.id}.${extension}`);
-        fs.mkdirSync(this.options.dest, { recursive: true });
+        fs.mkdirSync(join(dir), { recursive: true });
         fs.writeFileSync(savePath, buffer);
         this.logger.debug(`File was successfuly saved as::${savePath}`);
         return await this.fileRepository.save(file);

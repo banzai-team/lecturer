@@ -18,6 +18,26 @@ export class File {
     path: string;
 }
 
+
+@ObjectType()
+export class TextChunk {
+    @Field(type => String)
+    id: string
+
+    @Field(type => Int)
+    from: number;
+    
+    @Field(type => Int)
+    to: number;
+    
+    @Field(type => Int)
+    order: number;
+    
+    @Field(type => String)
+    content: string
+}
+
+
 @ObjectType()
 export class GlossaryItem {
     @Field(type => String)
@@ -48,15 +68,17 @@ export class Lecture {
     id: string;
 
     @Field({ nullable: false })
-    name: string;
+    lectureName: string;
 
     @Field(type => File, { nullable: true })
     file?: File;
 
     @Field(type => Glossary, { nullable: true })
     glossary?: Glossary;
-}
 
+    @Field(type => [TextChunk], {nullable: true})
+    textChunks: [TextChunk]
+}
 
 
 @Resolver(of => Lecture)
