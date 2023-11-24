@@ -8,10 +8,6 @@ celery = Celery(__name__)
 celery.conf.broker_url = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379")
 celery.conf.result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379")
 
-@celery.task
-def dummy_task():
-    return 'I am a dummy task'
-
 @celery.task(name="create_task")
 def create_task(task_type):
     group_task = group(terms.si(), summ.si(), llm.si())
@@ -47,3 +43,8 @@ def terms():
     print("terms")
     time.sleep(1)
     return
+
+
+@celery.task
+def final_task():
+    return 'I am a dummy task'
