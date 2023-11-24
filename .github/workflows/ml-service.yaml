@@ -9,7 +9,7 @@ on:
       - main
   pull_request:
     paths:
-      - 'ml/**'
+      - 'ml/lecturer/**'
 permissions:
   contents: write
 
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./ml
+        working-directory: ./ml/lecturer
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
           DOCKER_REGISTRY: geekbrains-lecturer
       - run: |
           echo "Packaging docker image ..."
-          image="$DOCKER_IMAGE_REPO_ADDR/$DOCKER_REGISTRY/banzai-ml"
+          image="$DOCKER_IMAGE_REPO_ADDR/$DOCKER_REGISTRY/banzai-ml-lecturer"
           tag="$image:${{github.sha}}"
           latest_tag="$image:latest"
           docker build . -t $tag

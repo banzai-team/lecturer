@@ -49,7 +49,7 @@ jobs:
           DOCKER_LOGIN_USER: ${{secrets.SBC_ACCESS_KEY}}
           DOCKER_LOGIN_KEY: ${{secrets.DOCKER_LOGIN_KEY}}
           DOCKER_IMAGE_REPO_ADDR: swr.ru-moscow-1.hc.sbercloud.ru
-          DOCKER_REGISTRY: geekbrains-hack
+          DOCKER_REGISTRY: geekbrains-lecturer
       - run: |
           echo "Packaging docker image ..."
           image="$DOCKER_IMAGE_REPO_ADDR/$DOCKER_REGISTRY/banzai-inventory-service"
@@ -59,7 +59,7 @@ jobs:
           docker push $image
         env:
           DOCKER_IMAGE_REPO_ADDR: swr.ru-moscow-1.hc.sbercloud.ru
-          DOCKER_REGISTRY: geekbrains-hack
+          DOCKER_REGISTRY: geekbrains-lecturer
 #      - name: Commit report
 #        working-directory: k8s-apps/banzai-service1/
 #        run: |
