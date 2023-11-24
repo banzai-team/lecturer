@@ -63,12 +63,10 @@ module "kube" {
       platform_id = "standard-v3-t4"
       node_cores      = 8
       node_memory     = 32
-      preemptible = true
+#      preemptible = true
       description = "Kubernetes nodes group for GPU"
-      auto_scale = {
-        initial = 1
-        min = 1
-        max = 2
+      fixed_scale = {
+        size = 1
       }
       node_labels = {
         role        = "worker-gpu"
