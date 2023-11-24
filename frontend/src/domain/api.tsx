@@ -1,4 +1,6 @@
 import axios from "axios";
+import { request, gql } from "graphql-request";
+
 import { config } from '../config/config';
 
 // TODO: fix
@@ -33,6 +35,33 @@ export function getLectures() {
   return axios.get(`${config.apiUrl}/inventory/lecture?offset=0&size=1000`);
 }
 
-export function getLecture(id: string) {
-  return axios.get(`${config.apiUrl}/inventory/lecture/${id}`);
+const LectureQuery = gql`
+    query getLectures($id: String!) {
+        lecture(id: $id) {
+            id
+            lectureName
+            glossary {
+                id
+                createdAt
+                items {
+                    id
+                    term
+                    meaning
+                }
+            }
+            textChunks{
+                id
+#                from
+#                to
+                content
+            }
+        }
+    }
+`;
+export async function getLecture(id: string) {
+  const response = await request<{lecture: any}>(`${config.apiUrl}/graphql`, LectureQuery, {
+    "id": id
+  });
+
+  return response.lecture;
 }
