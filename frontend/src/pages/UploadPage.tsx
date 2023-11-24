@@ -71,7 +71,6 @@ const UploadPage: React.FC = () => {
                                 error={nameError}
                                 id="outlined-error-helper-text"
                                 label="Название лекции"
-                                helperText={formik.errors.name}
                                 {...formik.getFieldProps("name")}
                             />
                             <Box

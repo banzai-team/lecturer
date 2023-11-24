@@ -18,10 +18,11 @@ const Dropzone: React.FC<{ onDrop: any, acceptTypes?: any }> = props => {
             alignItems="center"
             minHeight="300px"
             maxWidth="300px"
-            sx={{cursor: 'pointer', "&:hover": {backgroundColor: 'secondary.light', transition: '0.3s'}}}
+            sx={{cursor: 'pointer', "&:hover": {borderColor: 'grey.900'}}}
             border={1}
             p="20px"
             borderRadius="4px"
+            borderColor="grey.400"
             {...getRootProps({ className: "dropzone" })}
         >
             <input {...getInputProps()} />
