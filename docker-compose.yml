@@ -1,14 +1,14 @@
 version: '3.9'
 
 services:
-  # app:
-  #   image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
-  #   build:
-  #     context: frontend
-  #   environment:
-  #     API_URL: http://api-gateway:8088
-  #   ports:
-  #     - 4000:80
+  app:
+    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
+    build:
+      context: frontend
+    environment:
+      API_URL: http://api-gateway:8088
+    ports:
+      - 4000:80
 
   inventory:
     build:
