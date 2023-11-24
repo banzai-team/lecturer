@@ -43,7 +43,7 @@ const LecturePage: React.FC = () => {
        }
        
       /* return lecture?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content, "");*/
-       return lecture?.textChunks?.map(chunk => <span onClick={() => onClick(chunk)}>{chunk.content}</span>)
+       return lecture?.textChunks?.map((chunk: TextChunk) => <span onClick={() => onClick(chunk)}>{chunk.content}</span>)
    }, [lecture?.textChunks]);
     
   if (isLoading) {
