@@ -36,6 +36,7 @@ type Glossary {
 
 type Lecture {
   id: String!
+  createdAt: DateTime!
   lectureName: String!
   file: File
   glossary: Glossary
