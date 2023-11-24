@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Box, Typography} from "@mui/material";
+import EditableText from "./EditableText";
 
 type GlosaryItemProps = {
     title: string,
@@ -12,9 +13,7 @@ const GlosaryItem: React.FC<GlosaryItemProps> = ({title, description }) => (
         <Typography variant="subtitle1" fontWeight='fontWeightBold' align={"left"} display="inline-block" pr={1}>
             {title}:
         </Typography>
-        <Typography variant="body2" align={"left"} display="inline">
-            {description}
-        </Typography>
+        <EditableText currentValue={description}/>
     </Box>
 );
 

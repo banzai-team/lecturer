@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from "react-router";
 
-import {Box, Paper, Typography} from "@mui/material";
+import {Box, IconButton, Paper, Tooltip, Typography} from "@mui/material";
 
 import PageTitle from "../components/PageTitle";
 import {Routes} from "./router";
@@ -15,8 +15,11 @@ import EmptyPage from "./EmptyPage";
 import CircularProgress from "@mui/material/CircularProgress";
 import {Link} from "react-router-dom";
 import {formData} from "../utils/DateUtils";
-
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import AddGlosaryItemForm from "../components/AddGlosaryItemForm";
 const LecturePage: React.FC = () => {
+    const [hasAddForm, setHasAddForm] = React.useState(false);
+
     const {id = ""} = useParams();
 
     const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id));
@@ -84,7 +87,7 @@ const LecturePage: React.FC = () => {
                     <Paper
                         sx={{p: 3}}
                     >
-                        <Typography paragraph>
+                        <Typography paragraph align="justify">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
                             enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
@@ -98,7 +101,7 @@ const LecturePage: React.FC = () => {
                             consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
                             sapien faucibus et molestie ac.
                         </Typography>
-                        <Typography paragraph>
+                        <Typography paragraph align="justify">
                             Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
                             eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
                             neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
@@ -116,9 +119,26 @@ const LecturePage: React.FC = () => {
                 <SideBlock
                     anchor="right"
                 >
-                    <PageTitle>
-                        Глосарий:
-                    </PageTitle>
+                    <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
+                        <PageTitle>
+                            Глосарий:
+                        </PageTitle>
+                        <Tooltip title="Добавить">
+                            <IconButton
+                                aria-label="add"
+                                color="primary"
+                                size="small"
+                                onClick={() => setHasAddForm(true)}
+                                sx={{border: "1px solid", "&:focus": {outline: "none"}}}
+                            >
+                                <AddOutlinedIcon fontSize="medium"/>
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                    { hasAddForm ? (
+                        <AddGlosaryItemForm onClose={() => setHasAddForm(false)} />
+                    ) : null}
+
                     {
                         glosary.map((item, key) => (
                             <GlosaryItem
