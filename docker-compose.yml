@@ -35,9 +35,13 @@ services:
 
   ml-mock:
     image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-lecturer:latest
+    build:
+      context: ./ml/lecturer
     environment:
-      S2T_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/s2t
-      SUM_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/sum
+      S2T_PATH: openai/whisper-large-v3
+      SUM_PATH: cointegrated/rut5-base-absum
+      #      S2T_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/s2t
+      #      SUM_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/sum
       FILE_DIR: /app/uploads
     volumes:
       - /tmp:./uploads
