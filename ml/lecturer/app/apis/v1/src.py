@@ -11,7 +11,7 @@ router = APIRouter(prefix="/v1")
 #              tags=['Inference endpoints'],
 #              status_code=status.HTTP_200_OK,
 #              response_model=OutputS2t)
-# def process_base(input_: InputS2t) -> OutputS2t:
+# def s2t(input_: InputS2t) -> OutputS2t:
 #     result = s2t_pipe(input_.file_path)
 #     return OutputBase(result=result['chunks'])
 
@@ -20,7 +20,7 @@ router = APIRouter(prefix="/v1")
              tags=['Inference endpoints'],
              status_code=status.HTTP_200_OK,
              response_model=OutputS2t)
-def process_base_mocker(input_: InputS2t) -> OutputS2t:
+def s2t_mocker(input_: InputS2t) -> OutputS2t:
     result = [{'timestamp': (0.0, 99.86),
                'text': ' you you you you Дорогие друзья, рад вас приветствовать на курсе знакомства с языками программирования.'},
               {'timestamp': (100.48, 101.9),
@@ -34,8 +34,9 @@ def process_base_mocker(input_: InputS2t) -> OutputS2t:
 #              tags=['Inference endpoints'],
 #              status_code=status.HTTP_200_OK,
 #              response_model=OutputSum)
-# def process_base(input_: InputSum) -> OutputSum:
-#     return OutputSum(result=result)
+# def sum(input_: InputSum) -> OutputSum:
+#      result = summarization_pipe(input_.text)
+#      return OutputSum(result=result)
 
 @router.post('/summarization_mocker',
              description='Суммаризация текста',
