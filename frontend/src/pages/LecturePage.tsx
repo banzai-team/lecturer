@@ -37,13 +37,23 @@ const LecturePage: React.FC = () => {
 
    const text = React.useMemo<string>(() => {
        const onClick = (chunk: TextChunk): void => {
-           if (audioRef?.current?.currentTime) {
+           if (audioRef?.current?.currentTime !== undefined) {
                audioRef.current.currentTime = chunk.from;
            }
-       }
+       };
        
       /* return lecture?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content, "");*/
-       return lecture?.textChunks?.map((chunk: TextChunk) => <span onClick={() => onClick(chunk)}>{chunk.content}</span>)
+       return lecture?.textChunks?.map((chunk: TextChunk) => (
+           <Box
+               component="span"
+               key={chunk.id}
+               onClick={() => onClick(chunk)}
+               sx={{transition: 'all 0.5s', cursor: 'pointer', padding: '1px', "&:hover": {backgroundColor: 'grey.200', borderRadius: "2px"}}}
+           >
+               {chunk.content}
+           </Box>
+           )
+       );
    }, [lecture?.textChunks]);
     
   if (isLoading) {
