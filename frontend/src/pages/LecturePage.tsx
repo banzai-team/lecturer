@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from "react-router";
 
-import {Box, Typography, Paper} from "@mui/material";
+import {Box, Paper, Typography} from "@mui/material";
 
 import PageTitle from "../components/PageTitle";
 import {Routes} from "./router";
@@ -9,12 +9,38 @@ import {Head} from "../components/Head";
 import BackLink from "../components/BackLink";
 import SideBlock from "../components/SideBlock";
 import GlosaryItem from "../components/GlosaryItem";
+import {getLecture} from "../domain/api";
+import {useQuery} from "react-query";
+import EmptyPage from "./EmptyPage";
+import CircularProgress from "@mui/material/CircularProgress";
+import {Link} from "react-router-dom";
+import {formData} from "../utils/DateUtils";
 
 const LecturePage: React.FC = () => {
     const {id = ""} = useParams();
 
+    const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id));
+
+    if (isLoading) {
+        return (
+            <EmptyPage>
+                <CircularProgress color="primary"/>
+            </EmptyPage>
+        )
+    }
+
+    if (error) {
+        return (
+            <EmptyPage text="Ой! Произошла ошибка с данной лекцией">
+                <Link to={Routes.ROOT}>Перейти на главную страницу</Link>
+            </EmptyPage>
+        )
+    }
+
+    const data = lecture?.data;
+
+
     // DATA NOT FROM API ! ! !
-    const data = {id, name: "My best lecture", date: "10.11.2023"};
     const glosary = [
         {
             title: "Слово",
@@ -32,8 +58,8 @@ const LecturePage: React.FC = () => {
 
     return (
         <>
-            <Head title={`Лекция "${data.name}"`}/>
-            <Box sx={{ display: 'flex'}}>
+            <Head title={`Лекция "${data.lectureName}"`}/>
+            <Box sx={{display: 'flex'}}>
                 <SideBlock
                     anchor="left"
                 >
@@ -46,9 +72,15 @@ const LecturePage: React.FC = () => {
                         назад к лекциям
                     </BackLink>
 
-                    <PageTitle>
-                        {data.name}
-                    </PageTitle>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <PageTitle>
+                            {data.lectureName}
+                        </PageTitle>
+                        <Typography variant="subtitle2" color="primary" fontWeight='fontWeightNormal'>
+                            {formData(data.createdAt)}
+                        </Typography>
+                    </Box>
+
                     <Paper
                         sx={{p: 3}}
                     >

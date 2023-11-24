@@ -22,3 +22,7 @@ export function uploadFile(payload: UploadFilePayload) {
 export function getLectures() {
   return axios.get(`${config.apiUrl}/inventory/lecture?offset=0&size=1000`);
 }
+
+export function getLecture(id: string) {
+  return axios.get(`${config.apiUrl}/inventory/lecture/${id}`);
+}
