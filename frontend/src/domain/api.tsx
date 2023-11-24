@@ -40,6 +40,11 @@ const LectureQuery = gql`
         lecture(id: $id) {
             id
             lectureName
+            file {
+                id
+                originalName
+                path
+            }
             glossary {
                 id
                 createdAt

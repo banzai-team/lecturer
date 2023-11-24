@@ -24,7 +24,7 @@ def create_task(lecture_id, file_path):
 @celery.task(name="s2t")
 def s2t(lecture_id, file_path):
     print(f's2t sending request for lecture {lecture_id} file {file_path}...')
-    response = requests.post(s2t_model_url, json={'file_path': 'bla.txt'})
+    response = requests.post(s2t_model_url, json={'file_path': file_path})
     print(f's2t completed. {response.status_code}')
     if (response.status_code == 200):
         json = {}
