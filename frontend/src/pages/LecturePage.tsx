@@ -17,15 +17,35 @@ import {Link} from "react-router-dom";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddGlosaryItemForm from "../components/AddGlosaryItemForm";
 import {config} from "../config/config";
+
+interface TextChunk {
+    id: string;
+    from: number;
+    to: number;
+    order: number;
+    content: string;
+}
+
 const LecturePage: React.FC = () => {
     const [hasAddForm, setHasAddForm] = React.useState(false);
 
     const {id = ""} = useParams();
-
+    
+    const audioRef = React.useRef<any>();
+    
     const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id));
 
-   const text = React.useMemo<string>(() => lecture?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content , ""), [lecture?.textChunks]);
-
+   const text = React.useMemo<string>(() => {
+       const onClick = (chunk: TextChunk): void => {
+           if (audioRef?.current?.currentTime) {
+               audioRef.current.currentTime = chunk.from;
+           }
+       }
+       
+      /* return lecture?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content, "");*/
+       return lecture?.textChunks?.map(chunk => <span onClick={() => onClick(chunk)}>{chunk.content}</span>)
+   }, [lecture?.textChunks]);
+    
   if (isLoading) {
         return (
             <EmptyPage>
@@ -80,7 +100,11 @@ const LecturePage: React.FC = () => {
                         <PageTitle>
                             {data.lectureName}
                         </PageTitle>
-                        <audio src={`${config.apiUrl}/${lecture?.file?.path}`} controls />
+                        <audio
+                            src={`${config.apiUrl}/${lecture?.file?.path}`}
+                            controls
+                            ref={audioRef}
+                        />
                     </Box>
 
                     <Paper
