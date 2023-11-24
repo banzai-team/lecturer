@@ -1,4 +1,9 @@
+declare global {
+  interface Window {
+    API_URL?: string;
+  }
+}
+
 export const config = {
-  // apiUrl: process.env.REACT_APP_API_URL ?? "http://localhost:3000"
-  apiUrl: "http://localhost:8080"
+  apiUrl: window.API_URL || import.meta.env.VITE_API_URL || "http://localhost:3000"
 }
