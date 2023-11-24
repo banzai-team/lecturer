@@ -11,3 +11,9 @@ class InputSum(BaseModel):
 
 class OutputSum(BaseModel):
     result: str
+
+class InputCl(BaseModel):
+    text: str
+
+class OutputCl(BaseModel):
+    result: list[str]
