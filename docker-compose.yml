@@ -25,13 +25,20 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USERNAME: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - /tmp:/tmp
     depends_on:
       - db
       - rmq
       - redis
-  
+
   ml-mock:
-    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-lecturer:b14405c24eed0c2b2d0b48565ef9e3997c88069a
+    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-lecturer:latest
+    environment:
+      S2T_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/s2t
+      SUM_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/sum
+    volumes:
+      - /tmp:/tmp
     ports:
       - 8083:8080
 
@@ -39,7 +46,7 @@ services:
     build: ./backend/py-inventory-service
     ports:
       - 8004:8000
-    command: ["uvicorn","app.main:app", "--host", "0.0.0.0", "--reload"]
+    command: [ "uvicorn","app.main:app", "--host", "0.0.0.0", "--reload" ]
     volumes:
       - ./backend:/usr/src/app
     environment:
