@@ -79,7 +79,7 @@ const IndexPage: React.FC = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data.map((row) => (
+                            {data.map((row: {lectureName: string, id: string, createdAt: string}) => (
                                 <TableRow
                                     hover
                                     key={row.id}
