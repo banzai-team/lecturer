@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { InventoryService } from './inventory.service';
-import { Lecture } from './inventory.entity';
+import { Glossary, GlossaryItem, Lecture } from './inventory.entity';
 import { Page } from 'src/commons/page';
 
 @Controller('inventory')
@@ -13,15 +13,15 @@ export class InventoryController {
     async listLectures(
         @Query('offset') offset: number = 0,
         @Query('size',) size: number = 10): Promise<Page<Lecture>> {
-            return await this.inventoryService.listLecturepage({
-                offset,
-                size,
-                sortBy: undefined,
-                sort: 'desc'
-            })
+        return await this.inventoryService.listLecturepage({
+            offset,
+            size,
+            sortBy: undefined,
+            sort: 'desc'
+        })
     }
 
-    @Post('/lecture')
+    @Post('lecture')
     @UseInterceptors(FileInterceptor('file'))
     async createLecture(
         @UploadedFile() file: Express.Multer.File,
@@ -45,6 +45,38 @@ export class InventoryController {
             name: 'Arrays',
             file: 'some_recording.mp3',
             createdAt: new Date()
+        }
+    }
+
+    @Post('glossary')
+    async createGlossary( @Body() { lectureId }): Promise<any> {
+        const glossary =  await this.inventoryService.createGlossary(lectureId, []);
+        return {
+            id: glossary.id,
+            createdAt: glossary.createdAt
+        }
+    }
+
+    @Post('glossary/:glossaryId/item')
+    async createGlossaryItem(@Param('glossaryId') glossaryId: string, @Body() { term, meaning }): Promise<any> {
+        const item = await this.inventoryService.createGlossaryItem(glossaryId, term, meaning)
+        return {
+            id: item.id,
+            term: item.term,
+            meaning: item.meaning
+        }
+    }
+
+    @Put('glossary/:glossaryId/item/:itemId')
+    async updateGlossaryItem(
+        @Param('glossaryId') glossaryId: string,
+        @Param('itemId') itemId: string,
+        @Body() { term, meaning }): Promise<any> {
+        const item = await this.inventoryService.updateGlossaryItem(glossaryId, itemId, term, meaning);
+        return {
+            id: item.id,
+            term: item.term,
+            meaning: item.meaning
         }
     }
 }
