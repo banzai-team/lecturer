@@ -3,10 +3,15 @@ import { request, gql } from "graphql-request";
 
 import { config } from '../config/config';
 
-// TODO: fix
 export type UploadFilePayload = {
-  name: any;
+  name: string;
   file: any;
+};
+
+export type GlossaryItemPayload = {
+  id: string;
+  term: string;
+  meaning: string;
 };
 
 export async function uploadFile(payload: UploadFilePayload) {
@@ -69,4 +74,17 @@ export async function getLecture(id: string) {
   });
 
   return response.lecture;
+}
+
+
+export async function addGlossaryItem(payload: GlossaryItemPayload) {
+  const form = new FormData();
+  form.append("meaning", payload.meaning);
+  form.append("term", payload.term);
+
+  return await axios.post(`${config.apiUrl}/glossary/${payload.id}/item`, form, {
+    headers: {
+      'Content-Type': `multipart/form-data;`,
+    },
+  });
 }

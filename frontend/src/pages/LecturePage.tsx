@@ -17,6 +17,7 @@ import {Link} from "react-router-dom";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddGlosaryItemForm from "../components/AddGlosaryItemForm";
 import {config} from "../config/config";
+
 const LecturePage: React.FC = () => {
     const [hasAddForm, setHasAddForm] = React.useState(false);
 
@@ -45,20 +46,30 @@ const LecturePage: React.FC = () => {
     const data = lecture;
 
     // DATA NOT FROM API ! ! !
-    const glosary = [
-        {
-            title: "Слово",
-            description: "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper"
-        },
-        {
-            title: "СловоСловоСловоСлово",
-            description: "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper"
-        },
-        {
-            title: "Слово сложное",
-            description: "Consequat mauris"
-        },
-    ]
+    const glosary = {
+        id: "test",
+        items: [
+            {
+                id: "g1",
+                term: "Слово",
+                meaning: "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper"
+
+            },
+            {
+                id:
+                    "g2",
+                term:
+                    "СловоСловоСловоСлово",
+                meaning:
+                    "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper"
+            },
+            {
+                id: "g3",
+                term: "Слово сложное",
+                meaning: "Consequat mauris"
+            },
+        ]
+    }
 
     return (
         <>
@@ -111,15 +122,16 @@ const LecturePage: React.FC = () => {
                         </Tooltip>
                     </Box>
                     { hasAddForm ? (
-                        <AddGlosaryItemForm onClose={() => setHasAddForm(false)} />
+                        <AddGlosaryItemForm onClose={() => setHasAddForm(false)} glosaryId={glosary.id}/>
                     ) : null}
 
                     {
-                        glosary.map((item, key) => (
+                        glosary?.items?.map((item) => (
                             <GlosaryItem
-                                key={`word-${key}`}
-                                title={item.title}
-                                description={item.description}
+                                key={`term-${item.id}`}
+                                term={item.term}
+                                meaning={item.meaning}
+                                id={item.id}
                             />
                         ))
                     }
