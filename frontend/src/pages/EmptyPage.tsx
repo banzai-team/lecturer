@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Typography} from "@mui/material";
+import {Box, Container, Typography} from "@mui/material";
 
 type EmptyPageProps = {
     text?: string;
@@ -7,7 +7,7 @@ type EmptyPageProps = {
 }
 const EmptyPage: React.FC<EmptyPageProps> = ({text, children}) => {
     return (
-        <Box paddingTop={10}>
+        <Container sx={{ paddingTop: 10 }}>
             {
                 text ? (
                     <Typography variant="h6" gutterBottom color="primary" fontWeight='fontWeightBold'>
@@ -16,9 +16,9 @@ const EmptyPage: React.FC<EmptyPageProps> = ({text, children}) => {
                 ) : null
             }
             {
-                children ? <Box>{children}</Box> : null
+                children ? <Box mt={4}>{children}</Box> : null
             }
-        </Box>
+        </Container>
     );
 };
 

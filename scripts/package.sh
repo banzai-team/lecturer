@@ -1,8 +1,8 @@
 SCRIPT_DIR=$(dirname "$0")
 #
-#for d in $SCRIPT_DIR/../charts/* ; do
-#    helm package -u $d -d ./packaged-charts
-#done
+for d in $SCRIPT_DIR/../charts/* ; do
+    helm package -u $d -d ./packaged-charts
+done
 
 helm package -u $SCRIPT_DIR/charts/geekbrains-lecturer -d ./packaged-charts
 

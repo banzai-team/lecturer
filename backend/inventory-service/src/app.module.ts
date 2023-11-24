@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RecordingModule } from './recording/recording.module';
-import { LectureModule } from './lecture/lecture.module';
+import { AnalyseModule } from './analyse/analyse.module';
+import { InventoryModule } from './inventory/inventory.module';
 import { BullModule } from '@nestjs/bullmq';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
@@ -26,12 +26,9 @@ import { DataSourceOptions } from 'typeorm';
       useFactory: (configService: ConfigService) => ({connection: configService.get('bullMq')}),
       inject: [ConfigService],
     }),
-    BullModule.registerQueue({
-      name: 'transcode'
-    }),
     HealthModule,
-    RecordingModule, 
-    LectureModule, FileModule
+    AnalyseModule, 
+    InventoryModule, FileModule
   ],
   controllers: [AppController],
   providers: [AppService],

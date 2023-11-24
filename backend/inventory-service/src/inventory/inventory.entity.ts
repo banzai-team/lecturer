@@ -1,5 +1,5 @@
 import { UploadedFile } from "src/file/file.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from "typeorm";
 
 @Entity({
     name: 'lecture'
@@ -20,14 +20,26 @@ export class Lecture {
     })
     lectureName: string;
 
-    @OneToOne(t => LectureText, lt => lt.lecture)
+    @OneToOne(t => LectureText, lt => lt.lecture, {
+        cascade: true
+    })
     text: Relation<LectureText>;
 
-    @OneToOne(t => UploadedFile)
+    @JoinColumn({ name: "file_id" })
+    @OneToOne(t => UploadedFile, {
+        cascade: true
+    })
     file: Relation<UploadedFile>;
 
-    @OneToOne(t => Glossary, g => g.lecture)
+    @OneToOne(t => Glossary, g => g.lecture, {
+        cascade: true
+    })
     glossary: Relation<Glossary>;
+
+    @OneToMany(m => LectureTextChunk, m => m.lecture, {
+        cascade: true
+    })
+    textChunks: Relation<LectureTextChunk[]>;
 }
 
 @Entity({
@@ -44,10 +56,15 @@ export class Glossary {
     })
     createdAt: Date;
 
-    @OneToOne(l => Lecture, l => l.glossary)
+    @JoinColumn({ name: "lecture_id" })
+    @OneToOne(l => Lecture, l => l.glossary, {
+        orphanedRowAction: 'delete'
+    })
     lecture: Relation<Lecture>;
 
-    @OneToMany(m => GlossaryItem, m => m.glossary)
+    @OneToMany(m => GlossaryItem, m => m.glossary, {
+        cascade: true
+    })
     items: Relation<GlossaryItem[]>;
 }
 
@@ -64,7 +81,9 @@ export class GlossaryItem {
     @Column()
     meaning: string;
 
-    @ManyToOne(c => Glossary, c => c.items)
+    @ManyToOne(c => Glossary, c => c.items, {
+        orphanedRowAction: 'delete'
+    })
     glossary: Relation<Glossary>;
 }
 
@@ -87,11 +106,11 @@ export class LectureText {
     })
     content: string;
 
-    @OneToOne(l => Lecture, l => l.text)
+    @JoinColumn({ name: "lecture_id" })
+    @OneToOne(l => Lecture, l => l.text, {
+        orphanedRowAction: "delete",
+    })
     lecture: Lecture;
-
-    @OneToMany(m => LectureTextChunk, m => m.lectureText)
-    textChunks: Relation<LectureTextChunk[]>;
 }
 
 @Entity({
@@ -103,7 +122,6 @@ export class LectureTextChunk {
 
     @Column()
     content: string;
-
 
     @Column({
         type: 'int'
@@ -120,6 +138,8 @@ export class LectureTextChunk {
     })
     to: number;
 
-    @ManyToOne(c => LectureText, c => c.textChunks)
-    lectureText: Relation<LectureText>;
+    @ManyToOne(c => Lecture, c => c.textChunks, {
+        orphanedRowAction: "delete"
+    })
+    lecture: Relation<Lecture>;
 }
