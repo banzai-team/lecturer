@@ -24,7 +24,7 @@ const LecturePage: React.FC = () => {
 
     const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id));
 
-   const text = React.useMemo<string>(() => data?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content , ""), [lecture?.textChunks]);
+   const text = React.useMemo<string>(() => lecture?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content , ""), [lecture?.textChunks]);
 
   if (isLoading) {
         return (
