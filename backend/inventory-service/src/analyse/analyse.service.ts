@@ -14,9 +14,7 @@ export class AnalyseService {
     private readonly logger = new Logger(AnalyseService.name);
 
     constructor(
-        @InjectQueue(SPEECH_TO_TEXT_QUEUE) private readonly s2tQueue: Queue,
         private readonly inventoryService: InventoryService,
-        @InjectRepository(Analyse) private readonly analyseJobRepository: Repository<Analyse>
     ) {}
 
     public async analyse(lectureId: string): Promise<Analyse> {
