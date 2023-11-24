@@ -34,7 +34,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: join(__dirname, 'uploads'),
     }),
     HealthModule,
-    AnalyseModule, 
+    AnalyseModule.register({
+      workerUrl: 't'
+    }), 
     InventoryModule, FileModule
   ],
   controllers: [AppController],

@@ -25,6 +25,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USERNAME: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      WORKER_URL: http://web:8000
     volumes:
       - /tmp:/app/uploads
     depends_on:

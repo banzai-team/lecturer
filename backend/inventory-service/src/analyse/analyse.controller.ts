@@ -12,8 +12,7 @@ export class AnalyseController {
 
     @Post('lecture/:id')
     async analyse(@Param('id') id: string): Promise<string> {
-        const analyse = await this.analyseService.analyse(id);
-        return analyse.id;
+        return  await this.analyseService.analyse(id);
     }
 
 
