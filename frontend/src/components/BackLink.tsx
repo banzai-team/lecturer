@@ -3,7 +3,6 @@ import React from 'react';
 import WestIcon from "@mui/icons-material/West";
 import {Link} from "react-router-dom";
 import {styled} from "@mui/material/styles";
-import {TableCell} from "@mui/material";
 
 type BackLinkProps = {
     children: any,

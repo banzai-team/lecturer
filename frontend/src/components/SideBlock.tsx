@@ -9,7 +9,7 @@ type SideBlockProps = {
     children?: any
 }
 
-const MainDrawer = styled(Drawer)(({theme}) => ({
+const MainDrawer = styled(Drawer)(() => ({
     // color: theme.palette.primary.main,
     flexShrink: 0,
     '& .MuiDrawer-paper': {

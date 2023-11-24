@@ -10,8 +10,6 @@ import BackLink from "../components/BackLink";
 import SideBlock from "../components/SideBlock";
 import GlosaryItem from "../components/GlosaryItem";
 
-const drawerWidth = 240;
-
 const LecturePage: React.FC = () => {
     const {id = ""} = useParams();
 
@@ -93,8 +91,8 @@ const LecturePage: React.FC = () => {
                         glosary.map((item, key) => (
                             <GlosaryItem
                                 key={`word-${key}`}
-                                title="Слово"
-                                description="Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper"
+                                title={item.title}
+                                description={item.description}
                             />
                         ))
                     }
