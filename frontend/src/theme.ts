@@ -3,9 +3,9 @@ import { createTheme } from '@mui/material/styles';
 export const theme = createTheme({
     palette: {
         primary: {
-    //         light: '#757ce8',
+            light: '#B181FF',
             main: '#7653FF',
-    //         dark: '#002884',
+            dark: '#6632B9',
     //         contrastText: '#fff',
         },
         secondary: {
@@ -42,6 +42,15 @@ export const theme = createTheme({
                 root: {
                     '&.MuiTableRow-hover:hover': {
                         backgroundColor: 'rgba(118, 83, 255, 0.03)',
+                    },
+                }
+            })
+        },
+        MuiButton: {
+            styleOverrides: ({
+                root: {
+                    '&:focus': {
+                        outline: '#6632B9',
                     },
                 }
             })

@@ -7,6 +7,8 @@ import {Box, Button, Container, Paper, TextField} from "@mui/material";
 import {Head} from "../components/Head";
 import Dropzone from "../components/Dropzone";
 import PageTitle from "../components/PageTitle";
+import BackLink from "../components/BackLink";
+import {Routes} from "./router";
 
 const validationMessage = "Обязательное поле";
 
@@ -42,6 +44,7 @@ const UploadPage: React.FC = () => {
         <>
             <Head title="Страница загрузки лекции"/>
             <Container maxWidth="lg" >
+                <BackLink to={Routes.ROOT}>назад к лекциям</BackLink>
                 <PageTitle>
                     Загрузка лекции
                 </PageTitle>

@@ -3,19 +3,21 @@ import React from 'react';
 import WestIcon from "@mui/icons-material/West";
 import {Link} from "react-router-dom";
 import {styled} from "@mui/material/styles";
+import {TableCell} from "@mui/material";
 
 type BackLinkProps = {
     children: any,
     to: string,
 }
 
-const Back = styled(Link)(() => ({
+const Back = styled(Link)(({theme}) => ({
     display: "flex",
     justifyContent: "start",
     alignItems: "center",
     fontSize: "12px",
     lineHeight: "12px",
-    marginBottom: 2
+    marginBottom: 2,
+    color: theme.palette.secondary.main,
 }));
 
 const BackLink: React.FC<BackLinkProps> = ({children, to}) => (

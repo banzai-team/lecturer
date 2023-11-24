@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Box,
     Container,
     Paper,
     Table,
@@ -16,6 +17,7 @@ import {Head} from "../components/Head";
 import EmptyPage from "./EmptyPage";
 import {Routes} from "./router";
 import PageTitle from "../components/PageTitle";
+import AddButton from "../components/AddButton";
 
 const NameTableCell = styled(TableCell)(() => ({
     fontSize: "16px",
@@ -40,7 +42,7 @@ const IndexPage: React.FC = () => {
 
     if (!data || !data.length) {
         return <EmptyPage text="Вы еще не загрузили ни одной лекции">
-            --- BUTTON CREATE ---
+            <AddButton />
         </EmptyPage>
     }
 
@@ -48,9 +50,13 @@ const IndexPage: React.FC = () => {
         <>
             <Head title="Главная страница"/>
             <Container maxWidth="lg" >
-                <PageTitle>
-                    Ваши лекции
-                </PageTitle>
+                <Box display="flex" justifyContent="space-between" pb={2}>
+                    <PageTitle>
+                        Ваши лекции
+                    </PageTitle>
+                    <AddButton />
+                </Box>
+
 
                 <TableContainer component={Paper}>
                     <Table

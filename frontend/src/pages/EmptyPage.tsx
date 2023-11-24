@@ -16,7 +16,7 @@ const EmptyPage: React.FC<EmptyPageProps> = ({text, children}) => {
                 ) : null
             }
             {
-                children ? <Box>{children}</Box> : null
+                children ? <Box mt={4}>{children}</Box> : null
             }
         </Container>
     );
