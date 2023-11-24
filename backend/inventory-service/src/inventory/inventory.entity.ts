@@ -104,7 +104,7 @@ export class LectureText {
 
     @JoinColumn({ name: "lecture_id" })
     @OneToOne(l => Lecture, l => l.text, {
-        orphanedRowAction: "delete"
+        orphanedRowAction: "delete",
     })
     lecture: Lecture;
 }

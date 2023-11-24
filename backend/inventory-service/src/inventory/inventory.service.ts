@@ -14,6 +14,7 @@ export class InventoryService {
     constructor(
         private readonly fileService: FileService,
         @InjectRepository(Lecture) private readonly lectureRepository: Repository<Lecture>,
+        @InjectRepository(LectureText) private readonly lectureTextRepository: Repository<LectureText>,
     ) { }
 
     async createLecture(
@@ -65,8 +66,17 @@ export class InventoryService {
             const lecture = await this.lectureRepository.findOne({
                 where: {
                     id: lectureId
+                },
+                relations: {
+                    text: true,
                 }
-            })
+            });
+            if (lecture.text) {
+                await this.lectureTextRepository.delete(lecture.text)
+                lecture.text = null;
+            }
+
+
             const lectureText: LectureText = new LectureText();
             lectureText.createdAt = new Date();
             lectureText.content =  chunks.map(c => c.text).join();

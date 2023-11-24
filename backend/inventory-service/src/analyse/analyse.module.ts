@@ -34,7 +34,7 @@ import { Analyse, AnalyseJob } from './analyse.entity';
     SpeechToTextProcessor,
     PostS2TFlowService,
     GlossaryProcessor,
-    // LlmProcessor,
+    LlmProcessor,
     SummarizerProcessor
   ]
 })
