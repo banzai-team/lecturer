@@ -14,9 +14,9 @@ import {useQuery} from "react-query";
 import EmptyPage from "./EmptyPage";
 import CircularProgress from "@mui/material/CircularProgress";
 import {Link} from "react-router-dom";
-import {formData} from "../utils/DateUtils";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddGlosaryItemForm from "../components/AddGlosaryItemForm";
+import {config} from "../config/config";
 const LecturePage: React.FC = () => {
     const [hasAddForm, setHasAddForm] = React.useState(false);
 
@@ -78,9 +78,7 @@ const LecturePage: React.FC = () => {
                         <PageTitle>
                             {data.lectureName}
                         </PageTitle>
-                        <Typography variant="subtitle2" color="primary" fontWeight='fontWeightNormal'>
-                            {formData(data.createdAt)}
-                        </Typography>
+                        <audio src={`${config.apiUrl}/${lecture?.file?.path}`} controls />
                     </Box>
 
                     <Paper
