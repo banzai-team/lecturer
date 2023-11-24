@@ -62,7 +62,9 @@ export class Glossary {
     })
     lecture: Relation<Lecture>;
 
-    @OneToMany(m => GlossaryItem, m => m.glossary)
+    @OneToMany(m => GlossaryItem, m => m.glossary, {
+        cascade: true
+    })
     items: Relation<GlossaryItem[]>;
 }
 
@@ -79,7 +81,9 @@ export class GlossaryItem {
     @Column()
     meaning: string;
 
-    @ManyToOne(c => Glossary, c => c.items)
+    @ManyToOne(c => Glossary, c => c.items, {
+        orphanedRowAction: 'delete'
+    })
     glossary: Relation<Glossary>;
 }
 
@@ -118,7 +122,6 @@ export class LectureTextChunk {
 
     @Column()
     content: string;
-
 
     @Column({
         type: 'int'

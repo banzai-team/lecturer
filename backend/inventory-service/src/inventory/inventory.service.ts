@@ -1,5 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Lecture, LectureText, LectureTextChunk } from './inventory.entity';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
+import { Glossary, GlossaryItem, Lecture, LectureText, LectureTextChunk } from './inventory.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { randomUUID } from 'crypto';
@@ -15,6 +15,8 @@ export class InventoryService {
         private readonly fileService: FileService,
         @InjectRepository(Lecture) private readonly lectureRepository: Repository<Lecture>,
         @InjectRepository(LectureText) private readonly lectureTextRepository: Repository<LectureText>,
+        @InjectRepository(Glossary) private readonly glossaryRepository: Repository<Glossary>,
+        @InjectRepository(GlossaryItem) private readonly glossaryItemRepository: Repository<GlossaryItem>,
     ) { }
 
     async createLecture(
@@ -36,7 +38,10 @@ export class InventoryService {
             take: pageable.size,
             skip: pageable.offset,
             relations: {
-                file: true
+                file: true,
+                glossary: {
+                    items: true
+                }
             }
         })
 
@@ -95,5 +100,61 @@ export class InventoryService {
         } else {
             throw new Error(`Lecture::${lectureId} was not found`);
         }
+    }
+
+    async createGlossary(lectureId: string, items: []): Promise<Glossary> {
+        const lecture = await this.lectureRepository.findOne({
+            where: {
+                id: lectureId
+            },
+            relations: {
+                glossary: true
+            }
+        });
+        if (!lecture) {
+            throw new HttpException('NOT FOUND', 404);
+        }
+        if (lecture.glossary) {
+            await this.glossaryRepository.delete(lecture.glossary);
+        }
+
+        const glossary = new Glossary();
+        lecture.glossary = glossary;
+        glossary.lecture = lecture;
+        glossary.createdAt = new Date();
+        return await this.glossaryRepository.save(glossary)
+    } 
+
+    async createGlossaryItem(glossaryId: string, term: string, meaning: string): Promise<GlossaryItem> {
+        const glossary = await this.glossaryRepository.findOne({
+            where: {
+                id: glossaryId
+            }
+        });
+        if (!glossary) {
+            throw new HttpException('NOT FOUND', 404);
+        }
+        const item = new GlossaryItem();
+        item.term = term;
+        item.meaning = meaning;
+        item.glossary = glossary;
+        return await this.glossaryItemRepository.save(item);
+    }
+
+    async updateGlossaryItem(glossaryId: string, itemid: string, term: string, meaning: string): Promise<GlossaryItem> {
+        const item = await this.glossaryItemRepository.findOne({
+            where: {
+                id: itemid,
+                glossary: {
+                    id: glossaryId
+                }
+            }
+        });
+        if (!item) {
+            throw new HttpException('NOT FOUND', 404);
+        }
+        item.term = term;
+        item.meaning = meaning;
+        return await this.glossaryItemRepository.save(item);
     }
 }
