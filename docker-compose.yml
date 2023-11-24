@@ -1,14 +1,14 @@
 version: '3.9'
 
 services:
-  app:
-    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
-    build:
-      context: frontend
-    environment:
-      API_URL: http://api-gateway:8088
-    ports:
-      - 4000:80
+  # app:
+  #   image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
+  #   build:
+  #     context: frontend
+  #   environment:
+  #     API_URL: http://api-gateway:8088
+  #   ports:
+  #     - 4000:80
 
   inventory:
     build:
@@ -19,6 +19,12 @@ services:
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_SCHEMA: public
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
       - rmq
