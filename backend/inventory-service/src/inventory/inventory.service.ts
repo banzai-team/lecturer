@@ -27,7 +27,7 @@ export class InventoryService {
         lecture.createdAt = new Date()
         lecture.lectureName = name;
         if (file) {
-            lecture.file = await this.fileService.saveFile(file.buffer, file.originalname, "mp3");
+            lecture.file = await this.fileService.saveFile(file.buffer, name, file.originalname, "mp3");
         }
         return await this.lectureRepository.save(lecture);
     }

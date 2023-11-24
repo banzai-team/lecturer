@@ -12,6 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceOptions } from 'typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -31,6 +33,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     BullModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({connection: configService.get('bullMq')}),
       inject: [ConfigService],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, 'uploads'),
     }),
     HealthModule,
     AnalyseModule, 
