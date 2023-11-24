@@ -7,7 +7,9 @@ import { randomUUID } from 'crypto';
 @Controller('analyse')
 export class AnalyseController {
 
-    constructor(private readonly analyseService: AnalyseService) { }
+    constructor(
+        private readonly analyseService: AnalyseService
+        ) { }
 
     @Get('/download/:id')
     async downloadRecording() {
@@ -18,12 +20,14 @@ export class AnalyseController {
 
     @Post('lecture/:id')
     async analyse(@Param('id') id: string): Promise<string> {
-        const subscriptionId = randomUUID();
-        await this.analyseService.analyse({
-            uuid: subscriptionId,
-            lectureId: id
-        });
-        return subscriptionId;
+        const analyse = await this.analyseService.analyse(id);
+        return analyse.id;
+    }
+
+
+    @Get(':id/progress')
+    async progress(@Param('id') id: string) {
+        return await this.analyseService.progress(id)
     }
 
 }

@@ -21,7 +21,7 @@ export class InventoryController {
             })
     }
 
-    @Post('/lecture')
+    @Post('lecture')
     @UseInterceptors(FileInterceptor('file'))
     async createLecture(
         @UploadedFile() file: Express.Multer.File,

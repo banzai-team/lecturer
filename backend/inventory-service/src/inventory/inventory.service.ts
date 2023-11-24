@@ -14,8 +14,6 @@ export class InventoryService {
     constructor(
         private readonly fileService: FileService,
         @InjectRepository(Lecture) private readonly lectureRepository: Repository<Lecture>,
-        @InjectRepository(LectureText) private readonly lectureTextRepository: Repository<LectureText>,
-        @InjectRepository(LectureTextChunk) private readonly lectureTextChunkRepository: Repository<LectureTextChunk>,
     ) { }
 
     async createLecture(
