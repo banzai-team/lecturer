@@ -30,6 +30,48 @@ services:
       - rmq
       - redis
   
+  ml-mock:
+    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-lecturer:b14405c24eed0c2b2d0b48565ef9e3997c88069a
+    ports:
+      - 8003:8000
+
+  web:
+    build: ./backend/py-inventory-service
+    ports:
+      - 8004:8000
+    command: ["uvicorn","app.main:app", "--host", "0.0.0.0", "--reload"]
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  worker:
+    build: ./backend/py-inventory-service
+    command: celery -A app.worker.celery worker --loglevel=info
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  flower:
+    build: ./backend/py-inventory-service
+    ports:
+      - 5555:5555
+    command: celery -A app.worker.celery flower --loglevel=info
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+
   db:
     container_name: inventory
     image: postgres:15-alpine
@@ -42,7 +84,7 @@ services:
     restart: always
 
   redis:
-    image: redis:latest
+    image: redis:7
     restart: always
     ports:
       - '6379:6379'
