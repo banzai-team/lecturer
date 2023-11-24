@@ -1,6 +1,5 @@
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
-from datasets import load_dataset
 
 from app.config import S2T_PATH
 

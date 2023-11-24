@@ -40,8 +40,7 @@ const LecturePage: React.FC = () => {
         )
     }
 
-    const data = lecture?.data;
-
+    const data = lecture;
 
     // DATA NOT FROM API ! ! !
     const glosary = [
