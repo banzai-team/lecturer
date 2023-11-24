@@ -7,9 +7,6 @@ import {Box, IconButton, TextareaAutosize, Tooltip, Typography} from "@mui/mater
 import {styled} from "@mui/material/styles";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useMutation} from "react-query";
-import {uploadFile} from "../domain/api";
-import {Routes} from "../pages/router";
 
 type EditableTextProps = {
     currentValue: string;
@@ -62,11 +59,11 @@ const EditableText: React.FC<EditableTextProps> = ({currentValue}) => {
                 <Textarea
                     autoFocus={true}
                     id="standard-basic"
-                    variant="standard"
                     maxRows={7}
                     minRows={2}
+                    placeholder="Описание"
                     sx={{
-                        borderColor: !!formik.touched?.description && !!formik.errors?.description && "#d32f2f"
+                        borderColor: !!formik.touched?.description && !!formik.errors?.description ? "#d32f2f" : ""
                     }}
                     {...formik.getFieldProps("description")}
                 />

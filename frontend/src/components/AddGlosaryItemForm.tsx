@@ -10,7 +10,7 @@ type AddGlosaryItemFormProps = {
     onClose: () => void;
 }
 
-const Textarea = styled(TextareaAutosize)(({theme, error}) => ({
+const Textarea = styled(TextareaAutosize)(({theme}) => ({
     color: theme.palette.secondary.main,
     fontWeight: 400,
     lineHeight: 1.5,
@@ -19,7 +19,6 @@ const Textarea = styled(TextareaAutosize)(({theme, error}) => ({
     fontFamily: "IBM Plex Sans, sans-serif",
     width: "100%",
     resize: "none",
-    borderColor: error ? theme.palette.error : theme.palette.secondary,
     "&:hover": {
         borderColor: theme.palette.primary.main,
     },
@@ -60,11 +59,9 @@ const AddGlosaryItemForm: React.FC<AddGlosaryItemFormProps> = ({onClose}) => {
                 {...formik.getFieldProps("title")}
             />
             <Textarea
-                label="Понятие"
                 id="standard-basic"
-                variant="standard"
                 sx={{
-                    borderColor: !!formik.touched?.description && !!formik.errors?.description && "#d32f2f"
+                    borderColor: !!formik.touched?.description && !!formik.errors?.description ? "#d32f2f" : ""
                 }}
                 maxRows={7}
                 minRows={2}
