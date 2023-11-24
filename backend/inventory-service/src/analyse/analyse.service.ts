@@ -6,7 +6,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { InventoryService } from 'src/inventory/inventory.service';
 import { Analyse } from './analyse.entity';
 import { Repository } from 'typeorm';
-import { AnalyseModuleConfig, CONFIG_OPTIONS } from './analyse.module';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
@@ -16,7 +15,8 @@ import { ConfigService } from '@nestjs/config';
 export class AnalyseService {
 
     private readonly logger = new Logger(AnalyseService.name);
-    private readonly options: AnalyseModuleConfig;
+    private readonly options: {workerUrl: string};
+
     constructor(
         private readonly config: ConfigService, 
         private readonly httpService: HttpService,
