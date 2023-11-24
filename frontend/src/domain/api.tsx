@@ -22,9 +22,11 @@ export async function uploadFile(payload: UploadFilePayload) {
 
   await axios.post(`${config.apiUrl}/analyse/lecture/${response.data.id}`, {}, {
     headers: {
-      'Content-Type': `multipart/form-data;`,
+      'Content-Type': `application/json`,
     },
   });
+
+  return response;
 }
 
 export function getLectures() {

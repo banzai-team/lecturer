@@ -23,7 +23,7 @@ export class AnalyseService {
         private readonly inventoryService: InventoryService,
     ) {
         this.options = {
-            workerUrl: config.get('worker').url
+            workerUrl: this.config.get('worker').url
         }
     }
 
@@ -36,8 +36,9 @@ export class AnalyseService {
         if (!lecture.file) {
             throw new HttpException('FILE NOT FOUND', 404);
         }
+        this.logger.debug(this.config.get('worker').url);
         this.logger.debug(`Sending request to work on lecture::${lectureId} with file::${lecture.file.path}`)
-        const response = await firstValueFrom(this.httpService.post(this.options.workerUrl, {
+        const response = await firstValueFrom(this.httpService.post(`${this.options.workerUrl}/tasks`, {
             lecture_id: lectureId,
             file_path: lecture.file.path
         }))
