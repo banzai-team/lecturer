@@ -27,7 +27,7 @@ spec:
             {{- with .Values.extraEnv }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-          command: [ "/bin/sh", "-c", "wget -q -O tmp_model.zip $MODEL_URL && mkdir model && tar -xf tmp_model.zip --strip-components=1 -C models" ]
+          command: [ "/bin/sh", "-c", "wget -q -O tmp_model.zip $MODEL_URL && tar -xzvf tmp_model.zip --strip-components=1 -C models" ]
           volumeMounts:
             - mountPath: /models
               name: models
