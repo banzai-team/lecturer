@@ -70,6 +70,9 @@ export class Lecture {
     @Field({ nullable: false })
     lectureName: string;
 
+    @Field(type => Date)
+    createdAt: Date;
+
     @Field(type => File, { nullable: true })
     file?: File;
 

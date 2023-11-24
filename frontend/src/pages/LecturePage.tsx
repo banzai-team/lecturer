@@ -58,6 +58,8 @@ const LecturePage: React.FC = () => {
         },
     ]
 
+    const text = React.useMemo<string>(() => data.textChunks.reduce((acc: string, t: { content: string }) => acc + t.content , ""), data.textChunks);
+
     return (
         <>
             <Head title={`Лекция "${data.lectureName}"`}/>
@@ -85,7 +87,7 @@ const LecturePage: React.FC = () => {
                         sx={{p: 3}}
                     >
                         <Typography paragraph align="justify">
-                            {data.textChunks.reduce((acc, t) => acc + t.content , "")}
+                            {text}
                         </Typography>
                     </Paper>
                 </Box>
