@@ -1,7 +1,9 @@
+import os
 from fastapi import UploadFile, File, status
 from fastapi.routing import APIRouter
 
 from app.apis.v1.model import InputS2t, OutputS2t, InputSum, OutputSum
+from app.config.config import FILE_DIR
 #from app.core import s2t_pipe, summarization_pipe
 
 router = APIRouter(prefix="/v1")
@@ -12,7 +14,8 @@ router = APIRouter(prefix="/v1")
 #              status_code=status.HTTP_200_OK,
 #              response_model=OutputS2t)
 # def s2t(input_: InputS2t) -> OutputS2t:
-#     result = s2t_pipe(input_.file_path)
+#     file_path = os.path.join(FILE_DIR, input_.file_path)
+#     result = s2t_pipe(file_path)
 #     return OutputBase(result=result['chunks'])
 
 @router.post('/s2t_mocker',

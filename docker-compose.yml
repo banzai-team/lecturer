@@ -26,7 +26,7 @@ services:
       DB_USERNAME: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - /tmp:/tmp
+      - /tmp:/app/uploads
     depends_on:
       - db
       - rmq
@@ -37,8 +37,9 @@ services:
     environment:
       S2T_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/s2t
       SUM_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/sum
+      FILE_DIR: /app/uploads
     volumes:
-      - /tmp:/tmp
+      - /tmp:./uploads
     ports:
       - 8083:8080
 
