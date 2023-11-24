@@ -61,8 +61,8 @@ export class Lecture {
 
 @Resolver(of => Lecture)
 export class LectureResolver {
-    
-    constructor(@InjectRepository(LectureEntity) private readonly lectureRepository: Repository<LectureEntity>) {}
+
+    constructor(@InjectRepository(LectureEntity) private readonly lectureRepository: Repository<LectureEntity>) { }
 
     @Query(returns => Lecture)
     async lecture(@Args('id', { type: () => String }) id: string) {
@@ -77,6 +77,28 @@ export class LectureResolver {
                 },
                 textChunks: true,
                 text: true
+            }
+        })
+        return lecture;
+    }
+
+    @Query(returns => [Lecture])
+    async lectures(
+        @Args('offset', { type: () => Int, defaultValue: 0 }) offset: number,
+        @Args('size', { type: () => Int, defaultValue: 0 }) size: number,
+        @Args('sort', {type:() => String, defaultValue: "DESC"}) sort: 'DESC' | 'ASC'
+    ) {
+        const lecture = await this.lectureRepository.find({
+            relations: {
+                file: true,
+                glossary: {
+                    items: true
+                },
+                textChunks: true,
+                text: true
+            },
+            order: {
+                createdAt: sort
             }
         })
         return lecture;
