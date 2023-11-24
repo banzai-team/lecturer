@@ -9,6 +9,8 @@ import Dropzone from "../components/Dropzone";
 import PageTitle from "../components/PageTitle";
 import BackLink from "../components/BackLink";
 import {Routes} from "./router";
+import {uploadFile} from '../domain/api';
+import {useMutation} from "react-query";
 
 const validationMessage = "Обязательное поле";
 
@@ -17,6 +19,12 @@ const validationSchema = Yup.object({
 });
 
 const UploadPage: React.FC = () => {
+    const send = useMutation(uploadFile, {
+        onSuccess: (data) => {
+            console.log('File sent', data.status)
+        }
+    });
+
     const formik = useFormik<{
         name: string,
         files: {
@@ -31,9 +39,7 @@ const UploadPage: React.FC = () => {
             name: "",
             files: [],
         },
-        onSubmit: () => {
-            console.log('load lecture')
-        },
+        onSubmit: async (values) => send.mutate({ file: values.files[0], name: values.name }),
         validationSchema,
     });
 
@@ -49,7 +55,7 @@ const UploadPage: React.FC = () => {
                     Загрузка лекции
                 </PageTitle>
                 <Paper variant="outlined" sx={{p: "30px", maxWidth: "70%", margin: "0 auto"}}>
-                    <form onClick={formik.handleSubmit}>
+                    <form onSubmit={formik.handleSubmit}>
                         <Box
                             display="flex"
                             flexDirection="column"

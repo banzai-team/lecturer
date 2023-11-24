@@ -17,6 +17,7 @@ const Back = styled(Link)(({theme}) => ({
     lineHeight: "12px",
     marginBottom: 2,
     color: theme.palette.secondary.main,
+    width: "max-content"
 }));
 
 const BackLink: React.FC<BackLinkProps> = ({children, to}) => (
