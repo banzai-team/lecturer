@@ -5,6 +5,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { FileModule } from 'src/file/file.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Glossary, GlossaryItem, Lecture, LectureText, LectureTextChunk } from './inventory.entity';
+import { LectureResolver } from './inventory.resolver';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { Glossary, GlossaryItem, Lecture, LectureText, LectureTextChunk } from '
     })
   ],
   controllers: [InventoryController],
-  providers: [InventoryService],
-  exports: [InventoryService]
+  providers: [InventoryService, LectureResolver],
+  exports: [InventoryService, LectureResolver]
 })
 export class InventoryModule {}

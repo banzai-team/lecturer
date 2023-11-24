@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type File {
+  id: String!
+  uploadedAt: DateTime!
+  originalName: String!
+  path: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type GlossaryItem {
+  id: String!
+  term: String!
+  meaning: String!
+}
+
+type Glossary {
+  id: String!
+  createdAt: DateTime!
+  items: [GlossaryItem!]
+}
+
+type Lecture {
+  id: String!
+  name: String!
+  file: File
+  glossary: Glossary
+}
+
+type Query {
+  lecture(id: String!): Lecture!
+}
