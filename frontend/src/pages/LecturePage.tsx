@@ -76,7 +76,7 @@ const LecturePage: React.FC = () => {
                         назад к лекциям
                     </BackLink>
 
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom="10px">
                         <PageTitle>
                             {data.lectureName}
                         </PageTitle>
