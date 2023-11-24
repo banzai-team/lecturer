@@ -1,0 +1,30 @@
+config:
+  DB_HOST: geekbrains-backend-postgresql
+  DB_NAME: geekbrains-inventory
+  DB_PORT: "5432"
+  DB_USERNAME: app
+  DB_PASSWORD: password
+
+  REDIS_HOST: "redis-master.redis"
+  REDIS_PASS: "RTKIOQcibQ"
+
+postgresql:
+  primary:
+    #    nodeSelector:
+    #      scope: apps
+    #    tolerations:
+    #      - key: "scope"
+    #        operator: "Equal"
+    #        value: "apps"
+    #        effect: "NoSchedule"
+    #      - key: "scope"
+    #        operator: "Equal"
+    #        value: "apps"
+    #        effect: "NoExecute"
+    persistence:
+      enabled: true
+      size: 10Gi
+  auth:
+    database: geekbrains-inventory
+    password: "password"
+    username: "app"
