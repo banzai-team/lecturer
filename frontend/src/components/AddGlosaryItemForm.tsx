@@ -1,13 +1,16 @@
 import React from 'react';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
-import {Box, IconButton, TextareaAutosize, TextField, Tooltip} from "@mui/material";
+import {Box, CircularProgress, IconButton, TextareaAutosize, TextField, Tooltip} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {useFormik} from "formik";
 import * as Yup from "yup";
+import {useMutation} from "react-query";
+import {addGlossaryItem} from "../domain/api";
 
 type AddGlosaryItemFormProps = {
     onClose: () => void;
+    glosaryId: string;
 }
 
 const Textarea = styled(TextareaAutosize)(({theme}) => ({
@@ -29,21 +32,29 @@ const Textarea = styled(TextareaAutosize)(({theme}) => ({
 }));
 
 const validationSchema = Yup.object({
-    description: Yup.string().required(),
-    title: Yup.string().required(),
+    meaning: Yup.string().required(),
+    term: Yup.string().required(),
 });
 
-const AddGlosaryItemForm: React.FC<AddGlosaryItemFormProps> = ({onClose}) => {
+const AddGlosaryItemForm: React.FC<AddGlosaryItemFormProps> = ({onClose, glosaryId}) => {
+    const send = useMutation(addGlossaryItem, {
+        onSuccess: () => {
+            onClose();
+        }
+    });
+
     const formik = useFormik<{
-        description: string,
-        title: string
+        meaning: string,
+        term: string
     }>({
         initialValues: {
-            title: "",
-            description: "",
+            term: "",
+            meaning: "",
         },
-        // TODO: add edit api call
-        onSubmit: () => onClose(),
+
+        onSubmit: async (values) => send.mutate({
+            term: values.term, meaning: values.meaning, id: glosaryId
+        }),
         validationSchema,
     });
 
@@ -53,46 +64,51 @@ const AddGlosaryItemForm: React.FC<AddGlosaryItemFormProps> = ({onClose}) => {
                 variant="standard"
                 autoFocus={true}
                 size="small"
-                error={!!formik.touched?.title && !!formik.errors?.title}
+                error={!!formik.touched?.term && !!formik.errors?.term}
                 label="Понятие"
                 sx={{paddingBottom: 2, "& input": {fontSize: "13px !important"}}}
-                {...formik.getFieldProps("title")}
+                {...formik.getFieldProps("term")}
             />
             <Textarea
                 id="standard-basic"
                 sx={{
-                    borderColor: !!formik.touched?.description && !!formik.errors?.description ? "#d32f2f" : ""
+                    borderColor: !!formik.touched?.meaning && !!formik.errors?.meaning ? "#d32f2f" : ""
                 }}
                 maxRows={7}
                 minRows={2}
                 placeholder="Описание"
-                {...formik.getFieldProps("description")}
+                {...formik.getFieldProps("meaning")}
             />
             <Box flexDirection="row" display="flex" justifyContent="right">
-                <Tooltip title="Сохранить">
-                    <IconButton
-                        aria-label="done"
-                        size="small"
-                        // onClick={() => setEditMode(true)}
-                        sx={{"&:focus": {outline: "none"}}}
-                        color="success"
-                        type="submit"
-                    >
-                        <DoneIcon sx={{fontSize: "15px"}}/>
-                    </IconButton>
-                </Tooltip>
-                <Tooltip title="Отмена">
-                    <IconButton
-                        type="button"
-                        aria-label="back"
-                        size="small"
-                        sx={{"&:focus": {outline: "none"}}}
-                        color="error"
-                        onClick={onClose}
-                    >
-                        <CloseIcon sx={{fontSize: "15px"}}/>
-                    </IconButton>
-                </Tooltip>
+                {
+                    send.isLoading ? <CircularProgress color="primary" size="25px"/> : (
+                        <>
+                            <Tooltip title="Сохранить">
+                                <IconButton
+                                    aria-label="done"
+                                    size="small"
+                                    sx={{"&:focus": {outline: "none"}}}
+                                    color="success"
+                                    type="submit"
+                                >
+                                    <DoneIcon sx={{fontSize: "15px"}}/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Отмена">
+                                <IconButton
+                                    type="button"
+                                    aria-label="back"
+                                    size="small"
+                                    sx={{"&:focus": {outline: "none"}}}
+                                    color="error"
+                                    onClick={onClose}
+                                >
+                                    <CloseIcon sx={{fontSize: "15px"}}/>
+                                </IconButton>
+                            </Tooltip>
+                        </>
+                    )
+                }
             </Box>
         </form>
     );
