@@ -18,7 +18,7 @@ const Dropzone: React.FC<{ onDrop: any, acceptTypes?: any }> = props => {
             alignItems="center"
             minHeight="300px"
             maxWidth="300px"
-            sx={{cursor: 'pointer'}}
+            sx={{cursor: 'pointer', "&:hover": {backgroundColor: 'secondary.light', transition: '0.3s'}}}
             border={1}
             p="20px"
             borderRadius="4px"

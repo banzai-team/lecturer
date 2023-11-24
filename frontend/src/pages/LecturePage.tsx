@@ -121,7 +121,7 @@ const LecturePage: React.FC = () => {
                 >
                     <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
                         <PageTitle>
-                            Глосарий:
+                            Глоссарий:
                         </PageTitle>
                         <Tooltip title="Добавить">
                             <IconButton

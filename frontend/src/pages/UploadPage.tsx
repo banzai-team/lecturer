@@ -2,7 +2,7 @@ import React from "react";
 
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {Box, Container, Paper, TextField} from "@mui/material";
+import {Box, Container, IconButton, Paper, TextField} from "@mui/material";
 
 import {Head} from "../components/Head";
 import Dropzone from "../components/Dropzone";
@@ -85,10 +85,19 @@ const UploadPage: React.FC = () => {
                                         ? <Box display="flex" gap="10px" justifyContent="space-between" alignItems="center">
                                             <AudioFileOutlinedIcon sx={{ width: '40px', height: '40px'}} />
                                             <p>{formik.values.files.map(file => file.name)}</p>
-                                            <CloseOutlinedIcon
-                                                cursor="pointer"
+                                            <IconButton
+                                                aria-label="delete"
+                                                color="primary"
+                                                size="small"
                                                 onClick={() => formik.setFieldValue("files", [])}
-                                            />
+                                                sx={{"&:focus": {outline: "none"}}}
+                                            >
+                                                <CloseOutlinedIcon
+                                                    fontSize="medium"
+                                                    cursor="pointer"
+                                                />
+                                            </IconButton>
+                                            
                                         </Box>
                                         : <Dropzone
                                             acceptTypes={{"audio/mp3": [".mp3"]}}
