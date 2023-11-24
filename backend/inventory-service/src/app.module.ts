@@ -16,7 +16,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.development.local',
+      // envFilePath: '.env.development.local',
       load: [configuration],
       isGlobal: true,
     }),
