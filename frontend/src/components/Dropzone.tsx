@@ -26,7 +26,7 @@ const Dropzone: React.FC<{ onDrop: any, acceptTypes?: any }> = props => {
         >
             <input {...getInputProps()} />
             <DownloadIcon sx={{ width: '80px', height: '80px'}} color="primary" />
-            <Box mt="20px">
+            <Box mt="20px" textAlign="center">
                 {isDragActive ? (
                     <p>Перетащить сюда ...</p>
                 ) : (

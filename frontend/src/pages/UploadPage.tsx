@@ -11,6 +11,8 @@ import BackLink from "../components/BackLink";
 import {Routes} from "./router";
 import {uploadFile} from '../domain/api';
 import {useMutation} from "react-query";
+import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const validationMessage = "Обязательное поле";
 
@@ -76,7 +78,14 @@ const UploadPage: React.FC = () => {
                             >
                                 <Box flex={1}>
                                     {hasFile
-                                        ? <Box>Файл загружен</Box>
+                                        ? <Box display="flex" gap="10px" justifyContent="space-between" alignItems="center">
+                                            <AudioFileOutlinedIcon sx={{ width: '40px', height: '40px'}} />
+                                            <p>{formik.values.files.map(file => file.name)}</p>
+                                            <CloseOutlinedIcon
+                                                cursor="pointer"
+                                                onClick={() => formik.setFieldValue("files", [])}
+                                            />
+                                        </Box>
                                         : <Dropzone
                                             acceptTypes={{"audio/mp3": [".mp3"]}}
                                             onDrop={(acceptedFiles: any[]) => {
@@ -96,7 +105,7 @@ const UploadPage: React.FC = () => {
                                         />
                                     }
                                 </Box>
-                                <Box textAlign="left" flex={1}>
+                                <Box flex={1}>
                                     <p>Добавьте файл с данными.</p>
                                     <p>Вы можeте добавить только файлы в формате .mp3</p>
                                     <Button
