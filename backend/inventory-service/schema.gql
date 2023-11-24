@@ -14,6 +14,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type TextChunk {
+  id: String!
+  from: Int!
+  to: Int!
+  order: Int!
+  content: String!
+}
+
 type GlossaryItem {
   id: String!
   term: String!
@@ -28,9 +36,10 @@ type Glossary {
 
 type Lecture {
   id: String!
-  name: String!
+  lectureName: String!
   file: File
   glossary: Glossary
+  textChunks: [TextChunk!]
 }
 
 type Query {
