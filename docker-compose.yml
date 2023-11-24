@@ -66,6 +66,7 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
       - SPEECH_TO_TEXT_MODEL_URL=http://ml-mock:8080/v1/s2t_mocker
       - SUMMARIZATION_MODEL_URL=http://ml-mock:8080/v1/summarization_mocker
+      - INVENTORY_SERVICE_URL=http://inventory:3000
     depends_on:
       - redis
 

@@ -129,12 +129,12 @@ export class LectureTextChunk {
     order: number;
 
     @Column({
-        type: 'int'
+        type: 'float'
     })
     from: number;
     
     @Column({
-        type: 'int'
+        type: 'float'
     })
     to: number;
 
