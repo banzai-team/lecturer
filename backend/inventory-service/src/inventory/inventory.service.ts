@@ -63,6 +63,8 @@ export class InventoryService {
     }
 
     async createLectureTextChunks(lectureId: string, chunks: {content:string, from: number, to: number}[]): Promise<Lecture> {
+        this.logger.debug(`Saving chunks for lecture::${lectureId}...`)
+        
         if (await this.lectureRepository.exist({
             where: {
                 id: lectureId
@@ -96,7 +98,9 @@ export class InventoryService {
                 return chunk;
             });
             lecture.text = lectureText;
-            return await this.lectureRepository.save(lecture);
+            const lectResult = await this.lectureRepository.save(lecture);
+            this.logger.debug(`Chunks for lecture::${lectureId} were saved`)
+            return lectResult
         } else {
             throw new HttpException(`Lecture::${lectureId} was not found`, 404);
         }

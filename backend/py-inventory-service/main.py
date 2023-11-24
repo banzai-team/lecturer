@@ -9,8 +9,9 @@ app = FastAPI()
 
 @app.post("/tasks", status_code=201)
 def run_task(payload = Body(...)):
-    task_type = payload["type"]
-    task = create_task.delay(int(task_type))
+    lecture_id = payload["lecture_id"]
+    file_path = payload["file_path"]
+    task = create_task.delay(lecture_id, file_path)
     return JSONResponse({"task_id": task.id})
 
 
