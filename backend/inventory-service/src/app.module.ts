@@ -10,6 +10,8 @@ import { HealthModule } from './health/health.module';
 import { FileModule } from './file/file.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceOptions } from 'typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -21,6 +23,10 @@ import { DataSourceOptions } from 'typeorm';
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => configService.get<DataSourceOptions>('db'),
       inject: [ConfigService],
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: 'schema.gql'
     }),
     BullModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({connection: configService.get('bullMq')}),

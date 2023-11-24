@@ -1,5 +1,5 @@
 import React, {Suspense} from "react";
-import { RouteObject, useRoutes, BrowserRouter } from 'react-router-dom';
+import {RouteObject, useRoutes, BrowserRouter, Link} from 'react-router-dom';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -37,7 +37,11 @@ export const InnerRouter: React.FC = () => {
                 },
                 {
                     path: '*',
-                    element: <EmptyPage text="ERROR 404"/>,
+                    element: (
+                        <EmptyPage text="ERROR 404">
+                            <Link to={Routes.ROOT}>Перейти на главную страницу</Link>
+                        </EmptyPage>
+                    ),
                 },
             ],
         }
