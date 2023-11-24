@@ -1,7 +1,13 @@
 from pydantic import BaseModel
 
-class InputBase(BaseModel):
+class InputS2t(BaseModel):
     file_path: str
 
-class OutputBase(BaseModel):
+class OutputS2t(BaseModel):
     result: list[dict]
+
+class InputSum(BaseModel):
+    text: str
+
+class OutputSum(BaseModel):
+    result: str
