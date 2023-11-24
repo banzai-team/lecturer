@@ -24,7 +24,9 @@ const LecturePage: React.FC = () => {
 
     const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id));
 
-    if (isLoading) {
+   const text = React.useMemo<string>(() => data?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content , ""), [lecture.textChunks]);
+
+  if (isLoading) {
         return (
             <EmptyPage>
                 <CircularProgress color="primary"/>
@@ -57,8 +59,6 @@ const LecturePage: React.FC = () => {
             description: "Consequat mauris"
         },
     ]
-
-    const text = React.useMemo<string>(() => data.textChunks.reduce((acc: string, t: { content: string }) => acc + t.content , ""), data.textChunks);
 
     return (
         <>
