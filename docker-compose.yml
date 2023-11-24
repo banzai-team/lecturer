@@ -2,15 +2,16 @@ version: '3.9'
 
 services:
   app:
-    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
+#    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
     build:
       context: frontend
     environment:
-      API_URL: http://api-gateway:8088
+      API_URL: http://localhost:8080
     ports:
       - 4000:80
 
   inventory:
+#    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-inventory-service:latest
     build:
       context: ./backend/inventory-service
       dockerfile: Dockerfile
@@ -34,17 +35,17 @@ services:
       - redis
 
   ml-mock:
-    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-lecturer:latest
+#    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-ml-lecturer:latest
     build:
       context: ./ml/lecturer
     environment:
       S2T_PATH: openai/whisper-large-v3
       SUM_PATH: cointegrated/rut5-base-absum
-      #      S2T_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/s2t
-      #      SUM_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/sum
+#      S2T_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/s2t
+#      SUM_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/sum
       FILE_DIR: /app/uploads
     volumes:
-      - /tmp:./uploads
+      - /tmp:/app/uploads
     ports:
       - 8083:8080
 
@@ -52,7 +53,7 @@ services:
     build: ./backend/py-inventory-service
     ports:
       - 8004:8000
-    command: [ "uvicorn","app.main:app", "--host", "0.0.0.0", "--reload" ]
+    command: [ "uvicorn","app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     volumes:
       - ./backend:/usr/src/app
     environment:

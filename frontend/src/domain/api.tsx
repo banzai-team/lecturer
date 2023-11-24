@@ -7,12 +7,20 @@ export type UploadFilePayload = {
   file: any;
 };
 
-export function uploadFile(payload: UploadFilePayload) {
+export async function uploadFile(payload: UploadFilePayload) {
   const form = new FormData();
   form.append("file", payload.file);
   form.append("name", payload.name);
 
-  return axios.post(`${config.apiUrl}/inventory/lecture`, form, {
+  const response = await axios.post(`${config.apiUrl}/inventory/lecture`, form, {
+    headers: {
+      'Content-Type': `multipart/form-data;`,
+    },
+  });
+
+  console.log(response);
+
+  await axios.post(`${config.apiUrl}/analyse/lecture/${response.data.id}`, {}, {
     headers: {
       'Content-Type': `multipart/form-data;`,
     },
