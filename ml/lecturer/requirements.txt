@@ -12,4 +12,5 @@ git+https://github.com/huggingface/transformers.git
 datasets[audio]
 numpy==1.26.0
 accelerate==0.24.1
+requests==2.31.0
 sentencepiece
