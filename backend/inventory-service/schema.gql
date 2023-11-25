@@ -16,8 +16,8 @@ scalar DateTime
 
 type TextChunk {
   id: String!
-  from: Int!
-  to: Int!
+  from: Float!
+  to: Float!
   order: Int!
   content: String!
 }
@@ -36,15 +36,28 @@ type Glossary {
 
 type Lecture {
   id: String!
-  createdAt: DateTime!
   lectureName: String!
   summarizedDescription: String
+  createdAt: DateTime!
   file: File
   glossary: Glossary
   textChunks: [TextChunk!]
 }
 
+type Progress {
+  s2t: String!
+  summarize: String!
+  terms: String!
+  llm: String!
+}
+
+type Analyse {
+  id: String!
+  progress: Progress!
+}
+
 type Query {
+  analyse(id: String!): Analyse!
   lecture(id: String!): Lecture!
   lectures(offset: Int! = 0, size: Int! = 0, sort: String! = "DESC"): [Lecture!]!
 }
