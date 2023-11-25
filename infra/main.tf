@@ -38,7 +38,7 @@ module "kube" {
   ]
 
   master_logging = {
-    enabled = false
+    enabled                = false
     folder_id              = null
     enabled_kube_apiserver = true
     enabled_autoscaler     = true
@@ -46,34 +46,50 @@ module "kube" {
   }
 
   node_groups = {
-    "yc-k8s-ng-01" = {
+    "yc-k8s-ng-02" = {
       description = "Kubernetes nodes group 01"
-      node_cores      = 10
-      node_memory     = 30
-      auto_scale = {
-        initial = 1
-        min = 1
-        max = 2
+      node_cores  = 10
+      node_memory = 30
+      fixed_scale = {
+        size = 1
       }
+      node_taints = [
+        "target=ml_apps:NoSchedule",
+        "target=ml_apps:NoExecute"
+      ]
       node_labels = {
         role        = "worker-01"
-        environment = "app"
+        environment = "ml-app"
       }
     },
-#    "yc-k8s-gpu-01" = {
-#      node_gpus = 1
-#      platform_id = "standard-v3-t4"
-#      node_cores      = 8
-#      node_memory     = 32
-##      preemptible = true
-#      description = "Kubernetes nodes group for GPU"
-#      fixed_scale = {
-#        size = 1
-#      }
-#      node_labels = {
-#        role        = "worker-gpu"
-#        environment = "app"
-#      }
-#    },
+    "yc-k8s-ng-01" = {
+      description = "Kubernetes nodes group 01"
+      node_cores  = 4
+      node_memory = 8
+      auto_scale  = {
+        initial = 1
+        min     = 1
+        max     = 2
+      }
+      node_labels = {
+        role        = "worker-02"
+        environment = "app"
+      }
+    }
+    #    "yc-k8s-gpu-01" = {
+    #      node_gpus = 1
+    #      platform_id = "standard-v3-t4"
+    #      node_cores      = 8
+    #      node_memory     = 32
+    ##      preemptible = true
+    #      description = "Kubernetes nodes group for GPU"
+    #      fixed_scale = {
+    #        size = 1
+    #      }
+    #      node_labels = {
+    #        role        = "worker-gpu"
+    #        environment = "app"
+    #      }
+    #    },
   }
 }

@@ -29,7 +29,7 @@ resources:
     memory: 12Gi
 
 nodeSelector:
-  environment: ml-apps
+  environment: ml-app
 
 tolerations:
   - key: "target"

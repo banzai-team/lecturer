@@ -47,7 +47,7 @@ def summ(result):
     response = requests.post(summarize_model_url, json={'text': "".join([chunk['text'] for chunk in chunks])})
     if (response.status_code == 200):
         summ_text = response.json()['result']
-        response = requests.post(inventory_service_url + f'/inventory/lecture/{lecture_id}/summ',
+        response = requests.post(inventory_service_url + f'/inventory/lecture/{lecture_id}/summ_feedback',
                                  json={'sum': summ_text})
         # if response.status_code == 200:
         #     raise Exception(f'inventory service responded with wrong code')

@@ -45,6 +45,7 @@ const LectureQuery = gql`
         lecture(id: $id) {
             id
             lectureName
+            summarizedDescription
             file {
                 id
                 originalName
