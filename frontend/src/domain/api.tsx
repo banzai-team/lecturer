@@ -95,8 +95,8 @@ const LectureQuery = gql`
             }
             textChunks{
                 id
-                #                from
-                #                to
+                from
+                to
                 content
             }
         }
