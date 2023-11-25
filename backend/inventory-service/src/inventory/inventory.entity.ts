@@ -137,12 +137,12 @@ export class LectureTextChunk {
     @Column({
         type: 'float'
     })
-    from: number;
+    from: number = 0;
     
     @Column({
         type: 'float'
     })
-    to: number;
+    to: number = 0;
 
     @ManyToOne(c => Lecture, c => c.textChunks, {
         orphanedRowAction: "delete"
