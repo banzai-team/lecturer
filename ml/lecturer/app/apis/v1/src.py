@@ -18,7 +18,7 @@ inventory_service_url = os.environ.get("INVENTORY_SERVICE_URL", "http://localhos
              response_model=OutputS2t)
 def s2t(input_: InputS2t) -> OutputS2t:
     file_path = os.path.join(FILE_DIR, input_.file_path)
-    print(f'downloading file for path {file_path}...')
+    print(f'downloading file for path {input_.file_path}...')
     response = requests.get(f'{inventory_service_url}/{input_.file_path}')
     with open(os.path.join(FILE_DIR, input_.file_path), mode="wb") as file:
         file.write(response.content)

@@ -57,8 +57,6 @@ services:
 #      SUM_PATH: /app/models/sum
       CL_PATH: /app/models/fine-tune-bert
       FILE_DIR: /app/uploads
-    volumes:
-      - /tmp:/app/uploads
     ports:
       - 8083:8080
 
