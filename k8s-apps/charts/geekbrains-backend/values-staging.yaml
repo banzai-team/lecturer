@@ -4,6 +4,7 @@ config:
   DB_PORT: "5432"
   DB_USERNAME: app
   DB_PASSWORD: password
+  WORKER_URL: http://worker-api:8000
 
   REDIS_HOST: "redis-master.redis"
   REDIS_PASS: "RTKIOQcibQ"
