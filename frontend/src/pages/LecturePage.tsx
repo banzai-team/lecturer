@@ -75,30 +75,7 @@ const LecturePage: React.FC = () => {
     const data = lecture;
 
     // DATA NOT FROM API ! ! !
-    const glosary = {
-        id: "test",
-        items: [
-            {
-                id: "g1",
-                term: "Слово",
-                meaning: "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper"
-
-            },
-            {
-                id:
-                    "g2",
-                term:
-                    "СловоСловоСловоСлово",
-                meaning:
-                    "Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper"
-            },
-            {
-                id: "g3",
-                term: "Слово сложное",
-                meaning: "Consequat mauris"
-            },
-        ]
-    }
+    const glosary = lecture.glossary;
 
     return (
         <>
@@ -110,6 +87,7 @@ const LecturePage: React.FC = () => {
                     <PageTitle>
                         Содержание:
                     </PageTitle>
+                  {data.summarizedDescription}
                 </SideBlock>
                 <Box component="main" sx={{flexGrow: 1}}>
                     <BackLink to={Routes.ROOT}>
@@ -159,7 +137,7 @@ const LecturePage: React.FC = () => {
                     ) : null}
 
                     {
-                        glosary?.items?.map((item) => (
+                        glosary?.items?.map((item: any) => (
                             <GlosaryItem
                                 key={`term-${item.id}`}
                                 term={item.term}
