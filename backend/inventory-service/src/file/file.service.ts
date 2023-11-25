@@ -25,8 +25,8 @@ export class FileService {
         const file = new UploadedFile()
         const dir = join(this.options.dest, folder);
         file.id = randomUUID();
-        const savePath = join(dir, `file${file.id}.${extension}`);
-        file.path = join(folder, `file${file.id}.${extension}`);
+        const savePath = join(dir, `${filename}${file.id}.${extension}`);
+        file.path = join(folder, `${filename}${file.id}.${extension}`);
         file.originalName = filename;
         file.uploadedAt = new Date();
         fs.mkdirSync(join(dir), { recursive: true });
