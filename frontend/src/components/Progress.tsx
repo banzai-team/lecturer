@@ -5,6 +5,17 @@ import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 
+type StatusType = "in_progress" | "failed" | "success" | "pending";
+type ProgressProps = {
+    items: {
+        s2t: StatusType,
+        terms: StatusType,
+        summ: StatusType,
+        llm: StatusType,
+        finished: StatusType,
+    }
+};
+
 const Dot = styled("div")(() => ({
     height: "3px",
     width: "3px",
@@ -20,7 +31,7 @@ const Name = styled("div")(() => ({
     fontSize: "11px",
 }));
 
-const Item = styled("div")((props) => ({
+const Item = styled("div")((props: { status: StatusType }) => ({
     position: "relative",
     margin: "0 3px",
     height: "25px",
@@ -44,7 +55,7 @@ const Item = styled("div")((props) => ({
                     ? "#a8afbb" : "#7653FF",
 }));
 
-const Connection = styled("div")((props) => ({
+const Connection = styled("div")(() => ({
     position: "absolute",
     height: "calc(100% + 17px)",
     width: "157px",
@@ -55,19 +66,8 @@ const Connection = styled("div")((props) => ({
 
 }));
 
-type StatusType = "in_progress" | "failed" | "success" | "waiting";
-type ProgressProps = {
-    items: {
-        s2t: StatusType,
-        terms: StatusType,
-        summ: StatusType,
-        llm: StatusType,
-        finished: StatusType,
-    }
-};
-
 const Progress: React.FC<ProgressProps> = ({items}) => {
-    const data = [
+    const data: {type: "s2t" | "terms" | "summ" | "llm" | "finished", title: string}[] = [
         {
             type: "s2t",
             title: "s2t"
@@ -100,27 +100,31 @@ const Progress: React.FC<ProgressProps> = ({items}) => {
         >
             <Connection />
             {
-                data.map((currentItem, key) => (
-                    <>
-                        <Item status={items[currentItem.type]}>
-                            <Name>{currentItem.title}</Name>
+                data.map((currentItem, key) => {
+                    const currentStatus = items[currentItem.type];
+                    return (
+                        <>
+                            <Item status={currentStatus}>
+                                <Name>{currentItem.title}</Name>
+                                {
+                                    // @ts-ignore
+                                    currentStatus === "success"
+                                        ? <DoneIcon sx={{fontSize: "15px"}}/>
+                                        : currentStatus === "failed"
+                                            ? <CloseIcon sx={{fontSize: "15px"}}/>
+                                            : currentStatus === "in_progress"
+                                                ? <CircularProgress color="primary" size="15px"/>
+                                                : null
+                                }
+                            </Item>
                             {
-                                items[currentItem.type] === "success"
-                                    ? <DoneIcon sx={{fontSize: "15px"}}/>
-                                    : items[currentItem.type] === "failed"
-                                        ? <CloseIcon sx={{fontSize: "15px"}}/>
-                                        : items[currentItem.type] === "in_progress"
-                                            ? <CircularProgress color="primary" size="15px"/>
-                                            : null
+                                key === (data.length - 1)
+                                    ? null
+                                    : <><Dot/><Dot/><Dot/></>
                             }
-                        </Item>
-                        {
-                            key === (data.length - 1)
-                                ? null
-                                : <><Dot/><Dot/><Dot/></>
-                        }
-                    </>
-                ))
+                        </>
+                    )
+                })
             }
         </Box>
     );

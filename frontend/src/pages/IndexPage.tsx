@@ -8,7 +8,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow, Typography,
+    TableRow,
 } from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {useNavigate} from "react-router";
@@ -99,7 +99,7 @@ const IndexPage: React.FC = () => {
                                                 terms: "in_progress",
                                                 summ: "in_progress",
                                                 llm: "in_progress",
-                                                finished: "waiting",
+                                                finished: "pending",
                                             }}
                                         />
                                     </DateTableCell>
