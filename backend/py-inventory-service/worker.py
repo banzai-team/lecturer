@@ -67,10 +67,13 @@ def terms(result):
         terms = response.json()['result']
         real_terms = []
         for term in terms:
+            print(f'Calling llm model for term {term}')
             term_response = requests.post(llm_model_url, json={"txt": llm_promt + term})
             if (term_response.status_code == 200):
+                print(f'Llm response for term {term} is ${term_response.json()["txt"]}')
                 real_terms.append({'term': term_response.json()['txt'], 'meaning': term})
             else:
+                print(f'Llm model responded with wrong code. Using default term {term}')
                 real_terms.append({'term': term, 'meaning': term})
         requests.post(inventory_service_url + f'/inventory/lecture/{lecture_id}/class_feedback', json=real_terms)
         return terms
