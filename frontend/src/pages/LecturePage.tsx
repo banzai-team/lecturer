@@ -17,6 +17,7 @@ import {Link} from "react-router-dom";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddGlosaryItemForm from "../components/AddGlosaryItemForm";
 import {config} from "../config/config";
+import {styled} from "@mui/material/styles";
 
 interface TextChunk {
     id: string;
@@ -26,37 +27,51 @@ interface TextChunk {
     content: string;
 }
 
+const TextChunk = styled(Box)(({theme}) => ({
+    cursor: 'pointer',
+    transition: 'all 0.5s',
+    "&:hover": {
+        color: theme.palette.primary.main,
+    },
+}));
+
 const LecturePage: React.FC = () => {
     const [hasAddForm, setHasAddForm] = React.useState(false);
+    const [currentTime, setCurrentTime] = React.useState<number>(0);
 
     const {id = ""} = useParams();
-    
+
     const audioRef = React.useRef<any>();
-    
+
     const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id));
 
-   const text = React.useMemo<string>(() => {
-       const onClick = (chunk: TextChunk): void => {
-           if (audioRef?.current?.currentTime !== undefined) {
-               audioRef.current.currentTime = chunk.from;
-           }
-       };
-       
-      /* return lecture?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content, "");*/
-       return lecture?.textChunks?.map((chunk: TextChunk) => (
-           <Box
-               component="span"
-               key={chunk.id}
-               onClick={() => onClick(chunk)}
-               sx={{transition: 'all 0.5s', cursor: 'pointer', padding: '1px', "&:hover": {backgroundColor: 'grey.200', borderRadius: "2px"}}}
-           >
-               {chunk.content}
-           </Box>
-           )
-       );
-   }, [lecture?.textChunks]);
-    
-  if (isLoading) {
+    setInterval(() => {
+        setCurrentTime(audioRef?.current?.currentTime);
+    }, 5000);
+
+    const text = React.useMemo<string>(() => {
+        const onTextClick = (chunk: TextChunk): void => {
+            if (audioRef?.current?.currentTime !== undefined) {
+                audioRef.current.currentTime = chunk.from;
+                setCurrentTime(audioRef?.current?.currentTime);
+            }
+        }
+
+        /* return lecture?.textChunks?.reduce((acc: string, t: { content: string }) => acc + t.content, "");*/
+        return lecture?.textChunks?.map((chunk: TextChunk) => (
+                <TextChunk
+                    component="span"
+                    key={chunk.id}
+                    onClick={() => onTextClick(chunk)}
+                    sx={{ backgroundColor: chunk.to < currentTime ? 'grey.300' : 'transparent' }}
+                >
+                    {chunk.content}
+                </TextChunk>
+            )
+        );
+    }, [lecture?.textChunks, currentTime]);
+
+    if (isLoading) {
         return (
             <EmptyPage>
                 <CircularProgress color="primary"/>
