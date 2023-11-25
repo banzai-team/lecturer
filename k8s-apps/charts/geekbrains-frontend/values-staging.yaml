@@ -16,4 +16,4 @@ ingress:
 
 extraEnv:
   - name: API_URL
-    value: https://geekbrains-api.banzai-predict.site
+    value: https://api-geekbrains.banzai-predict.site
