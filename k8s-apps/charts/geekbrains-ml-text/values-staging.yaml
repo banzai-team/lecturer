@@ -27,3 +27,16 @@ resources:
   requests:
     cpu: 4.0
     memory: 12Gi
+
+nodeSelector:
+  environment: ml-apps
+
+tolerations:
+  - key: "target"
+    operator: "Equal"
+    value: "ml-apps"
+    effect: "NoSchedule"
+  - key: "target"
+    operator: "Equal"
+    value: "ml-apps"
+    effect: "NoExecute"
