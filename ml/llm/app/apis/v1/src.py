@@ -13,4 +13,4 @@ router = APIRouter(prefix="/v1")
              response_model=OutputBase)
 def process_base(input_: InputBase) -> OutputBase:
     result = interact(input_.txt)
-    return OutputBase(result=result)
+    return OutputBase(txt=result)
