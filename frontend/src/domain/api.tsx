@@ -113,13 +113,12 @@ export async function getLecture(id: string) {
 
 
 export async function addGlossaryItem(payload: GlossaryItemPayload) {
-  const form = new FormData();
-  form.append("meaning", payload.meaning);
-  form.append("term", payload.term);
-
-  return await axios.post(`${config.apiUrl}/glossary/${payload.id}/item`, form, {
+  return await axios.post(`${config.apiUrl}/glossary/${payload.id}/item`, {
+    meaning: payload.meaning,
+    term: payload.term,
+  }, {
     headers: {
-      'Content-Type': `multipart/form-data;`,
+      'Content-Type': `application/json;`,
     },
   });
 }
