@@ -34,9 +34,9 @@ nodeSelector:
 tolerations:
   - key: "target"
     operator: "Equal"
-    value: "ml-apps"
+    value: "ml_apps"
     effect: "NoSchedule"
   - key: "target"
     operator: "Equal"
-    value: "ml-apps"
+    value: "ml_apps"
     effect: "NoExecute"
