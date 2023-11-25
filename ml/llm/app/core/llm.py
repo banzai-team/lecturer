@@ -9,9 +9,13 @@ from langchain.prompts import PromptTemplate
 
 from app.config import MODEL_PATH
 
+from huggingface_hub import snapshot_download
+
+REPO_ID = MODEL_PATH
+PATH = snapshot_download(repo_id=REPO_ID, local_dir="./models/")
 # Make sure the model path is correct for your system!
 llm = LlamaCpp(
-    model_path=MODEL_PATH,
+    model_path=PATH,
     n_gpu_layers=n_gpu_layers,
     n_batch=2048,
     n_ctx=4096,
