@@ -7,9 +7,11 @@ from langchain.chains import LLMChain
 from langchain.llms import LlamaCpp
 from langchain.prompts import PromptTemplate
 
+from app.config import MODEL_PATH
+
 # Make sure the model path is correct for your system!
 llm = LlamaCpp(
-    model_path="/Users/jamakase/Documents/model-q4_K.gguf",
+    model_path=MODEL_PATH,
     n_gpu_layers=n_gpu_layers,
     n_batch=2048,
     n_ctx=4096,
