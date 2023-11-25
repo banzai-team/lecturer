@@ -38,7 +38,7 @@ services:
     build:
       context: ./ml/llm
     environment:
-      MODEL_PATH: /app/models/model-q4_K.gguf
+      MODEL_PATH: IlyaGusev/saiga_mistral_7b_gguf
     volumes:
       - /tmp:/app/uploads
 #      - ${MODEL_DIR}:/app/models
