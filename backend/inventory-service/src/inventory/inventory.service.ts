@@ -91,8 +91,8 @@ export class InventoryService {
             lecture.textChunks = chunks.map((c, i) => {
                 const chunk = new LectureTextChunk();
                 chunk.order = i;
-                chunk.from = c.from;
-                chunk.to = c.to;
+                chunk.from = c.from || 0;
+                chunk.to = c.to || 0;
                 chunk.content = c.content;
                 chunk.lecture = lecture;
                 return chunk;
