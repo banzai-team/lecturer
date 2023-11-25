@@ -30,6 +30,8 @@ extraEnv:
     name: INVENTORY_SERVICE_URL
   - value: http://geekbrains-ml-llm.geekbrains-ml-llm:8080
     name: LLM_URL
+  - value: http://geekbrains-ml-llm.geekbrains-ml-llm:8080
+    name: LLM_MODEL_URL
 
 redis:
   metrics:
