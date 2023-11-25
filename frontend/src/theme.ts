@@ -9,7 +9,8 @@ export const theme = createTheme({
     //         contrastText: '#fff',
         },
         secondary: {
-            light: '#FAFAFD',
+            // light: '#FAFAFD',
+            light: '#fdfdfd',
             // light: 'rgba(245, 245, 245, 0.2)',
             main: '#263238',
             // dark: '#ba000d',
@@ -24,10 +25,20 @@ export const theme = createTheme({
                 }
             })
         },
+        MuiTableContainer: {
+            styleOverrides: ({
+                root: {
+                    boxShadow: "none",
+                    border: "1px solid rgba(0, 0, 0, 0.12)"
+                }
+            })
+        },
         MuiTableCell: {
             styleOverrides: ({
                 head: {
-                    backgroundColor: "#e9eaeb",
+                    // backgroundColor: "#e9eaeb",
+                    // backgroundColor: "#FAFAFA",
+                    backgroundColor: "#fafcfd",
                     // color: "white",
                     paddingTop: "7px",
                     paddingBottom: "7px",

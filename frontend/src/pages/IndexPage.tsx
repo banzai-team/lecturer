@@ -8,7 +8,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow,
+    TableRow, Typography,
 } from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {useNavigate} from "react-router";
@@ -22,6 +22,7 @@ import {useQuery} from "react-query";
 import {getLectures} from "../domain/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import {formData} from "../utils/DateUtils";
+import Progress from "../components/Progress";
 
 const NameTableCell = styled(TableCell)(() => ({
     fontSize: "16px",
@@ -75,6 +76,7 @@ const IndexPage: React.FC = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Название</TableCell>
+                                <TableCell align="right">Этапы работы</TableCell>
                                 <TableCell align="right">Дата загрузки</TableCell>
                             </TableRow>
                         </TableHead>
@@ -90,6 +92,17 @@ const IndexPage: React.FC = () => {
                                     <NameTableCell component="th">
                                         {row.lectureName}
                                     </NameTableCell>
+                                    <DateTableCell align="right">
+                                        <Progress
+                                            items={{
+                                                s2t: "success",
+                                                terms: "in_progress",
+                                                summ: "in_progress",
+                                                llm: "in_progress",
+                                                finished: "waiting",
+                                            }}
+                                        />
+                                    </DateTableCell>
                                     <DateTableCell align="right">
                                         {formData(row.createdAt)}
                                     </DateTableCell>
