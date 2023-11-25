@@ -4,7 +4,7 @@ config:
   DB_PORT: "5432"
   DB_USERNAME: app
   DB_PASSWORD: password
-  WORKER_URL: http://geekbrains-backend-py.geekbrains-backend-py:8000
+  WORKER_URL: http://geekbrains-backend-py.geekbrains-backend-py:80
 
   REDIS_HOST: "redis-master.redis"
   REDIS_PASS: "RTKIOQcibQ"
