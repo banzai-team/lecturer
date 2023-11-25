@@ -18,10 +18,13 @@ def run_task(payload = Body(...)):
 @app.get("/tasks/{task_id}")
 def get_status(task_id):
     task_result = AsyncResult(task_id)
+    
     result = {
         "task_id": task_id,
         "task_status": task_result.status,
-        "s2t": task_result.children[0].status,
-        "group": [r.status for r in task_result.children[0].children[0].results]
     }
+    if task_result.children: 
+        result['s2t'] = task_result.children[0].status
+        if (task_result.children[0].children):
+            result['group'] = [r.status for r in task_result.children[0].children[0].results]
     return JSONResponse(result)
