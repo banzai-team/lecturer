@@ -12,7 +12,7 @@ s2t_model_url = os.environ.get("SPEECH_TO_TEXT_MODEL_URL", "http://localhost:808
 summarize_model_url = os.environ.get("SUMMARIZATION_MODEL_URL", "http://localhost:8080/v1/summarization")
 classification_model_url = os.environ.get("CLASSIFICATION_MODEL_URL", "http://localhost:8080/v1/classification")
 inventory_service_url = os.environ.get("INVENTORY_SERVICE_URL", "http://localhost:8080")
-
+llm_model_url=os.environ.get("LLM_MODEL_URL", "http://localhost:8080/v1/invoke")
 
 @celery.task(name="create_task")
 def create_task(lecture_id, file_path):
@@ -64,10 +64,14 @@ def terms(result):
     response = requests.post(classification_model_url, json={'text': "".join([chunk['text'] for chunk in chunks])})
     if response.status_code == 200:
         terms = response.json()['result']
-        response = requests.post(inventory_service_url + f'/inventory/lecture/{lecture_id}/class_feedback',
-                                 json=[{'term': term, 'meaning': term} for term in terms])
-        # if response.status_code == 200:
-        #     raise Exception(f'inventory service responded with wrong code')
+        real_terms = []
+        for term in terms:
+            term_response = requests.post(llm_model_url, json={"txt": term})
+            if (term_response.status_code == 200):
+                real_terms.append({'term': term_response.json()['txt'], 'meaning': term})
+            else:
+                real_terms.append({'term': term, 'meaning': term})
+        requests.post(inventory_service_url + f'/inventory/lecture/{lecture_id}/class_feedback', json=real_terms)
         return terms
     else:
         raise Exception(f's2t model responded with wrong code')
