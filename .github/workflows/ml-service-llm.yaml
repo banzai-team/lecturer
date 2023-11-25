@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'ml/**'
-      - '.github/workflows/ml-service-llm.yaml'
+      - 'ml/llm/**'
+#      - '.github/workflows/ml-service-llm.yaml'
     branches:
       - main
   pull_request:
