@@ -88,6 +88,7 @@ services:
       - SUMMARIZATION_MODEL_URL=http://ml-mock:8080/v1/summarization
       - CLASSIFICATION_MODEL_URL=http://ml-mock:8080/v1/classification
       - INVENTORY_SERVICE_URL=http://inventory:3000
+      - LLM_MODEL_URL=http://ml-llm:8080/v1/invoke
     depends_on:
       - redis
 
