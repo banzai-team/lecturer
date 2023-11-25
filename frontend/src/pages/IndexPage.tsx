@@ -47,7 +47,7 @@ const IndexPage: React.FC = () => {
         )
     }
 
-    const data = lectures?.data.content;
+    const data = lectures;
 
     if (!data || !data.length) {
         return <EmptyPage text="Вы еще не загрузили ни одной лекции">

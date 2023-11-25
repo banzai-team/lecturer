@@ -36,8 +36,41 @@ export async function uploadFile(payload: UploadFilePayload) {
   return response;
 }
 
-export function getLectures() {
-  return axios.get(`${config.apiUrl}/inventory/lecture?offset=0&size=1000`);
+
+const LecturesQuery = gql`
+    query getLectures {
+        lectures(size: 1000) {
+            id
+            lectureName
+            createdAt
+            summarizedDescription
+            file {
+                id
+                originalName
+                path
+            }
+            glossary {
+                id
+                createdAt
+                items {
+                    id
+                    term
+                    meaning
+                }
+            }
+            textChunks{
+                id
+                #                from
+                #                to
+                content
+            }
+        }
+    }
+`;
+
+export async function getLectures() {
+  const response = await request<{ lectures: any }>(`${config.apiUrl}/graphql`, LecturesQuery, {});
+  return response.lectures
 }
 
 const LectureQuery = gql`
@@ -62,15 +95,16 @@ const LectureQuery = gql`
             }
             textChunks{
                 id
-#                from
-#                to
+                #                from
+                #                to
                 content
             }
         }
     }
 `;
+
 export async function getLecture(id: string) {
-  const response = await request<{lecture: any}>(`${config.apiUrl}/graphql`, LectureQuery, {
+  const response = await request<{ lecture: any }>(`${config.apiUrl}/graphql`, LectureQuery, {
     "id": id
   });
 
