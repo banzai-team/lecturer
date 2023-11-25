@@ -9,10 +9,10 @@ from langchain.prompts import PromptTemplate
 
 from app.config import MODEL_PATH
 
-from huggingface_hub import snapshot_download
+from huggingface_hub import hf_hub_download
 
 REPO_ID = MODEL_PATH
-PATH = snapshot_download(repo_id=REPO_ID, local_dir="./models/")
+PATH = hf_hub_download(repo_id=REPO_ID, filename="model-q4_K.gguf", local_dir="./models/")
 # Make sure the model path is correct for your system!
 llm = LlamaCpp(
     model_path=PATH,
