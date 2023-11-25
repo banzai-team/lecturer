@@ -6,7 +6,7 @@ services:
   #   build:
   #     context: frontend
   #   environment:
-  #     API_URL: http://api-gateway:8088
+  #     API_URL: http://localhost:8080
   #   ports:
   #     - 4000:80
 
@@ -26,9 +26,9 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USERNAME: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      WORKER_URL: http://web:8000/tasks
+      WORKER_URL: http://web:8000
     volumes:
-      - ./tmp:/app/uploads
+      - /tmp:/app/uploads
     depends_on:
       - db
 #      - rmq
@@ -58,7 +58,7 @@ services:
       CL_PATH: /app/models/fine-tune-bert
       FILE_DIR: /app/uploads
     volumes:
-      - ./tmp:/app/uploads
+      - /tmp:/app/uploads
     ports:
       - 8083:8080
 
