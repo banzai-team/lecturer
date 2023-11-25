@@ -28,6 +28,8 @@ extraEnv:
     name: CLASSIFICATION_MODEL_URL
   - value: http://geekbrains-backend.geekbrains-backend:3000
     name: INVENTORY_SERVICE_URL
+  - value: http://geekbrains-ml-llm.geekbrains-ml-llm:8080
+    name: LLM_URL
 
 redis:
   metrics:
