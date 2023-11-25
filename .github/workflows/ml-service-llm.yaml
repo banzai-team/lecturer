@@ -1,4 +1,4 @@
-name: ML service CI workflow
+name: ML service LLM CI workflow
 on:
   workflow_dispatch:
   push:
