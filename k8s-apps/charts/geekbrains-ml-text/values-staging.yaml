@@ -1,10 +1,12 @@
 extraEnv:
   - name: MODEL_URL
-    value: https://storage.yandexcloud.net/geekbrains-models/models.tar.gz
+    value: https://storage.yandexcloud.net/geekbrains-models/models_v2.tar.gz
   - name: S2T_PATH
     value: /models/s2t
   - name: SUM_PATH
     value: /models/sum
+  - name: CL_PATH
+    value: /models/fine-tune-bert
 
 persistence:
   enabled: true
