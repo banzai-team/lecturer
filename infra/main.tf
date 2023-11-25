@@ -48,6 +48,8 @@ module "kube" {
   node_groups = {
     "yc-k8s-ng-01" = {
       description = "Kubernetes nodes group 01"
+      node_cores      = 10
+      node_memory     = 30
       auto_scale = {
         initial = 1
         min = 1
@@ -58,20 +60,20 @@ module "kube" {
         environment = "app"
       }
     },
-    "yc-k8s-gpu-01" = {
-      node_gpus = 1
-      platform_id = "standard-v3-t4"
-      node_cores      = 8
-      node_memory     = 32
-#      preemptible = true
-      description = "Kubernetes nodes group for GPU"
-      fixed_scale = {
-        size = 1
-      }
-      node_labels = {
-        role        = "worker-gpu"
-        environment = "app"
-      }
-    },
+#    "yc-k8s-gpu-01" = {
+#      node_gpus = 1
+#      platform_id = "standard-v3-t4"
+#      node_cores      = 8
+#      node_memory     = 32
+##      preemptible = true
+#      description = "Kubernetes nodes group for GPU"
+#      fixed_scale = {
+#        size = 1
+#      }
+#      node_labels = {
+#        role        = "worker-gpu"
+#        environment = "app"
+#      }
+#    },
   }
 }

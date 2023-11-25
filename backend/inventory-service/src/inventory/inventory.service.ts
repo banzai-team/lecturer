@@ -64,7 +64,7 @@ export class InventoryService {
 
     async createLectureTextChunks(lectureId: string, chunks: {content:string, from: number, to: number}[]): Promise<Lecture> {
         this.logger.debug(`Saving chunks for lecture::${lectureId}...`)
-        
+
         if (await this.lectureRepository.exist({
             where: {
                 id: lectureId
@@ -105,8 +105,32 @@ export class InventoryService {
             throw new HttpException(`Lecture::${lectureId} was not found`, 404);
         }
     }
+    async updateLectureSumm(lectureId: string, summ: string): Promise<Lecture> {
+        this.logger.debug(`Updating lecture`)
 
-    async createGlossary(lectureId: string, items: []): Promise<Glossary> {
+        if (await this.lectureRepository.exist({
+            where: {
+                id: lectureId
+            }
+        })) {
+            const lecture = await this.lectureRepository.findOne({
+                where: {
+                    id: lectureId
+                },
+                relations: {
+                    text: true,
+                }
+            });
+            lecture.summarizedDescription = summ;
+            const lectResult = await this.lectureRepository.save(lecture);
+            this.logger.debug(`Summirized description::${lectureId} were saved`)
+            return lectResult
+        } else {
+            throw new HttpException(`Lecture::${lectureId} was not found`, 404);
+        }
+    }
+
+    async createGlossary(lectureId: string, items: {term: string, meaning: string}[]): Promise<Glossary> {
         const lecture = await this.lectureRepository.findOne({
             where: {
                 id: lectureId
@@ -127,7 +151,29 @@ export class InventoryService {
         glossary.lecture = lecture;
         glossary.createdAt = new Date();
         return await this.glossaryRepository.save(glossary)
-    } 
+    }
+    async updateGlossary(lectureId: string, items: {term: string, meaning: string}[]): Promise<void> {
+        const lecture = await this.lectureRepository.findOne({
+            where: {
+                id: lectureId
+            },
+            relations: {
+                glossary: true
+            }
+        });
+      if (!lecture) {
+        throw new HttpException('NOT FOUND', 404);
+      }
+      const glossaryItems = items.map(i => {
+        const item = new GlossaryItem();
+        item.term = i.term;
+        item.meaning = i.meaning;
+        item.glossary = lecture.glossary;
+
+        return item;
+      })
+      await this.glossaryItemRepository.save(glossaryItems);
+    }
 
     async createGlossaryItem(glossaryId: string, term: string, meaning: string): Promise<GlossaryItem> {
         const glossary = await this.glossaryRepository.findOne({

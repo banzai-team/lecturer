@@ -38,6 +38,7 @@ type Lecture {
   id: String!
   createdAt: DateTime!
   lectureName: String!
+  summarizedDescription: String
   file: File
   glossary: Glossary
   textChunks: [TextChunk!]

@@ -4,7 +4,7 @@ from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 from app.config import S2T_PATH
 
 
-device = "cuda:0" if torch.cuda.is_available() else "cpu"
+device = "cuda:0" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 
 s2t_pipe = pipeline(
     "automatic-speech-recognition",

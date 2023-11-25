@@ -22,3 +22,8 @@ persistence:
   volume:
     name: data
     mountPath: /models
+
+resources:
+  requests:
+    cpu: 4.0
+    memory: 12Gi

@@ -20,6 +20,12 @@ export class Lecture {
     })
     lectureName: string;
 
+    @Column({
+        name: 'summarized_description',
+        nullable: true
+    })
+    summarizedDescription?: string;
+
     @OneToOne(t => LectureText, lt => lt.lecture, {
         cascade: true
     })

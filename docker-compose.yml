@@ -1,14 +1,14 @@
 version: '3.9'
 
 services:
-  app:
-#    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
-    build:
-      context: frontend
-    environment:
-      API_URL: http://localhost:8080
-    ports:
-      - 4000:80
+#  app:
+##    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-frontend:latest
+#    build:
+#      context: frontend
+#    environment:
+#      API_URL: http://localhost:8080
+#    ports:
+#      - 4000:80
 
   inventory:
 #    image: swr.ru-moscow-1.hc.sbercloud.ru/geekbrains-lecturer/banzai-inventory-service:latest
@@ -31,7 +31,7 @@ services:
       - /tmp:/app/uploads
     depends_on:
       - db
-      - rmq
+#      - rmq
       - redis
 
   ml-mock:
@@ -39,13 +39,15 @@ services:
     build:
       context: ./ml/lecturer
     environment:
-      S2T_PATH: openai/whisper-large-v3
-      SUM_PATH: cointegrated/rut5-base-absum
-#      S2T_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/s2t
-#      SUM_PATH: /Users/jamakase/PycharmProjects/pythonProject1/models/sum
+#      S2T_PATH: openai/whisper-large-v3
+#      SUM_PATH: cointegrated/rut5-base-absum
+      S2T_PATH: /app/models/s2t
+      SUM_PATH: /app/models/sum
+      CL_PATH: /app/models/fine-tune-bert
       FILE_DIR: /app/uploads
     volumes:
       - /tmp:/app/uploads
+      - ${MODEL_DIR}:/app/models
     ports:
       - 8083:8080
 
@@ -70,8 +72,9 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - SPEECH_TO_TEXT_MODEL_URL=http://ml-mock:8080/v1/s2t_mocker
-      - SUMMARIZATION_MODEL_URL=http://ml-mock:8080/v1/summarization_mocker
+      - SPEECH_TO_TEXT_MODEL_URL=http://ml-mock:8080/v1/s2t
+      - SUMMARIZATION_MODEL_URL=http://ml-mock:8080/v1/summarization
+      - CLASSIFICATION_MODEL_URL=http://ml-mock:8080/v1/classification
       - INVENTORY_SERVICE_URL=http://inventory:3000
     depends_on:
       - redis
@@ -105,16 +108,16 @@ services:
     restart: always
     ports:
       - '6379:6379'
-    volumes:
-      - ./cache:/data
+#    volumes:
+#      - ./cache:/data
     environment:
       REDIS_PORT: 6379
 
-  rmq:
-    image: rabbitmq:3.10.7-management
-    ports:
-      - 15672:15672
-      - 5672:5672
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RMQ_USERNAME}
-      RABBITMQ_DEFAULT_PASS: ${RMQ_PASSWORD}
+#  rmq:
+#    image: rabbitmq:3.10.7-management
+#    ports:
+#      - 15672:15672
+#      - 5672:5672
+#    environment:
+#      RABBITMQ_DEFAULT_USER: ${RMQ_USERNAME}
+#      RABBITMQ_DEFAULT_PASS: ${RMQ_PASSWORD}

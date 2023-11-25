@@ -70,6 +70,9 @@ export class Lecture {
     @Field({ nullable: false })
     lectureName: string;
 
+    @Field({ nullable: true })
+    summarizedDescription?: string;
+
     @Field(type => Date)
     createdAt: Date;
 
