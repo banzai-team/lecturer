@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Analyse, AnalyseJob } from './analyse.entity';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
+import { AnalyseResolver } from './analyse.resolver';
 // file --> s2t (chunks) --> summarizator model + glossary model + ?llm
 @Module({
   imports: [
@@ -17,6 +18,10 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [AnalyseController],
   providers: [
     AnalyseService,
+    AnalyseResolver
+  ], 
+  exports: [
+    AnalyseResolver
   ]
 })
 export class AnalyseModule {
