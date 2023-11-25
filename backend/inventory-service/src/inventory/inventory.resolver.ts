@@ -1,4 +1,4 @@
-import { Args, Field, Int, ObjectType, Query, Resolver } from "@nestjs/graphql";
+import { Args, Field, Float, Int, ObjectType, Query, Resolver } from "@nestjs/graphql";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Lecture as LectureEntity } from "./inventory.entity";
@@ -24,10 +24,10 @@ export class TextChunk {
     @Field(type => String)
     id: string
 
-    @Field(type => Int)
+    @Field(type => Float)
     from: number;
     
-    @Field(type => Int)
+    @Field(type => Float)
     to: number;
     
     @Field(type => Int)
