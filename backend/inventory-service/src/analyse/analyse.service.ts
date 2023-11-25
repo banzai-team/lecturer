@@ -46,7 +46,8 @@ export class AnalyseService {
     }
 
     public async progress(id: string) {
-        // return this.postFlow.getJobState(id)
+        const response = await firstValueFrom(this.httpService.get(`${this.options.workerUrl}/tasks${id}`))
+        return response.data;
     }
 }
 
