@@ -20,7 +20,10 @@ def s2t(input_: InputS2t) -> OutputS2t:
     file_path = os.path.join(FILE_DIR, input_.file_path)
     print(f'downloading file for path {input_.file_path}...')
     response = requests.get(f'{inventory_service_url}/{input_.file_path}')
-    with open(os.path.join(FILE_DIR, input_.file_path), mode="wb") as file:
+    if (response.status_code != 200):
+        raise Exception(f'unable to download file {response.status_code}')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with open(file_path, mode="wb") as file:
         file.write(response.content)
     result = s2t_pipe(file_path)
     return OutputS2t(result=result['chunks'])
