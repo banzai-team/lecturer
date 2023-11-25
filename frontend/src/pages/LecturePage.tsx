@@ -43,7 +43,7 @@ const LecturePage: React.FC = () => {
 
     const audioRef = React.useRef<any>();
 
-    const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id));
+    const {data: lecture, isLoading, error} = useQuery(id, () => getLecture(id), {refetchInterval: 1000});
 
     setInterval(() => {
         setCurrentTime(audioRef?.current?.currentTime);
@@ -164,7 +164,8 @@ const LecturePage: React.FC = () => {
                                 key={`term-${item.id}`}
                                 term={item.term}
                                 meaning={item.meaning}
-                                id={item.id}
+                                id={glosary.id}
+                                termId={item.id}
                             />
                         ))
                     }

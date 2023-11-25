@@ -7,9 +7,14 @@ import {Box, IconButton, TextareaAutosize, Tooltip, Typography} from "@mui/mater
 import {styled} from "@mui/material/styles";
 import {useFormik} from "formik";
 import * as Yup from "yup";
+import {editGlossaryItem} from "../domain/api";
+import {useMutation} from "react-query";
 
 type EditableTextProps = {
     currentValue: string;
+    glosaryId: string;
+    term: string;
+    termId: string;
 }
 
 const Textarea = styled(TextareaAutosize)(({theme}) => ({
@@ -34,13 +39,20 @@ const validationSchema = Yup.object({
     description: Yup.string().required(),
 });
 
-const EditableText: React.FC<EditableTextProps> = ({currentValue}) => {
+const EditableText: React.FC<EditableTextProps> = ({currentValue, glosaryId, term,termId}) => {
     const [editMode, setEditMode] = React.useState(false);
     // const send = useMutation(uploadFile, {
     //     onSuccess: () => {
     //         setEditMode(false);
     //     }
     // });
+
+    const send = useMutation(editGlossaryItem, {
+        onSuccess: () => {
+            setEditMode(false);
+        }
+    });
+
     const formik = useFormik<{
         description: string,
     }>({
@@ -48,7 +60,9 @@ const EditableText: React.FC<EditableTextProps> = ({currentValue}) => {
             description: currentValue,
         },
         // TODO: add edit api call
-        onSubmit: () => setEditMode(false),
+        onSubmit: async (values) => send.mutate({
+            term: term, meaning: values.description, id: glosaryId, termId: termId
+        }),
         validationSchema,
     });
 

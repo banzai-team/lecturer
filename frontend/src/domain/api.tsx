@@ -12,6 +12,7 @@ export type GlossaryItemPayload = {
   id: string;
   term: string;
   meaning: string;
+  termId: string;
 };
 
 export async function uploadFile(payload: UploadFilePayload) {
@@ -111,7 +112,6 @@ export async function getLecture(id: string) {
   return response.lecture;
 }
 
-
 export async function addGlossaryItem(payload: GlossaryItemPayload) {
   return await axios.post(`${config.apiUrl}/glossary/${payload.id}/item`, {
     meaning: payload.meaning,
@@ -119,6 +119,16 @@ export async function addGlossaryItem(payload: GlossaryItemPayload) {
   }, {
     headers: {
       'Content-Type': `application/json;`,
+    },
+  });
+}
+
+export async function editGlossaryItem(payload: GlossaryItemPayload) {
+  return await axios.put(`${config.apiUrl}/glossary/${payload.id}/item/${payload.termId}`, {
+    term: payload.term, meaning: payload.meaning
+  }, {
+    headers: {
+      'Content-Type': `multipart/form-data;`,
     },
   });
 }
