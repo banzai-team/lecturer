@@ -13,6 +13,7 @@ summarize_model_url = os.environ.get("SUMMARIZATION_MODEL_URL", "http://localhos
 classification_model_url = os.environ.get("CLASSIFICATION_MODEL_URL", "http://localhost:8080/v1/classification")
 inventory_service_url = os.environ.get("INVENTORY_SERVICE_URL", "http://localhost:8080")
 llm_model_url=os.environ.get("LLM_MODEL_URL", "http://localhost:8080/v1/invoke")
+llm_promt = os.environ.get("LLM_MODEL_PROMT", 'Найди одно слово, для которого дается определение в следующих предложениях и верни ответ с этим словом. ')
 
 @celery.task(name="create_task")
 def create_task(lecture_id, file_path):
@@ -66,7 +67,7 @@ def terms(result):
         terms = response.json()['result']
         real_terms = []
         for term in terms:
-            term_response = requests.post(llm_model_url, json={"txt": term})
+            term_response = requests.post(llm_model_url, json={"txt": llm_promt + term})
             if (term_response.status_code == 200):
                 real_terms.append({'term': term_response.json()['txt'], 'meaning': term})
             else:
