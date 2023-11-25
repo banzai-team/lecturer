@@ -106,7 +106,11 @@ const IndexPage: React.FC = () => {
                         terms: row.textChunks?.length ? row?.glossary?.items.length ? "success" : "in_progress": "pending",
                         summ: row.textChunks?.length ? row?.summarizedDescription ? "success" : "in_progress": "pending",
                         llm: row.textChunks?.length ? "success" : "pending",
-                        finished: "pending",
+                        finished:
+                            row.textChunks?.length &&
+                            row?.summarizedDescription &&
+                            row?.glossary?.items.length
+                                ? "success" : "pending",
                       }}
                     />
                   </DateTableCell>
