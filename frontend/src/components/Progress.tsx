@@ -47,8 +47,8 @@ const Item = styled("div")((props) => ({
 const Connection = styled("div")((props) => ({
     position: "absolute",
     height: "calc(100% + 17px)",
-    width: "60%",
-    right: "20%",
+    width: "157px",
+    right: "52px",
     top: "-10px",
     border: "1px solid rgba(0, 0, 0, 0.1)",
     borderRadius: "10px"
@@ -97,7 +97,6 @@ const Progress: React.FC<ProgressProps> = ({items}) => {
             pt={1}
             justifyContent="end"
             position="relative"
-            maxWidth="max-content"
         >
             <Connection />
             {
