@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { InventoryService } from './inventory.service';
 import { Lecture } from './inventory.entity';
@@ -68,6 +68,13 @@ export class InventoryController {
       term: item.term,
       meaning: item.meaning
     }
+  }
+
+  @Delete('glossary/:glossaryId/item/:itemId')
+  async deleteGlossaryItem(
+    @Param('glossaryId') glossaryId: string,
+    @Param('itemId') itemId: string): Promise<any> {
+    await this.inventoryService.deleteGlossaryItem(glossaryId, itemId);
   }
 
   @Post('lecture/:id/text-chunks')

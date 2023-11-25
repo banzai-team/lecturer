@@ -207,4 +207,19 @@ export class InventoryService {
         item.meaning = meaning;
         return await this.glossaryItemRepository.save(item);
     }
+
+    async deleteGlossaryItem(glossaryId: string, itemid: string) {
+        const item = await this.glossaryItemRepository.findOne({
+            where: {
+                id: itemid,
+                glossary: {
+                    id: glossaryId
+                }
+            }
+        });
+        if (!item) {
+            throw new HttpException('NOT FOUND', 404);
+        }
+        await this.glossaryItemRepository.delete(item);
+    }
 }
