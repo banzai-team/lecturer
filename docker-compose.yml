@@ -41,7 +41,7 @@ services:
       MODEL_PATH: /app/models/model-q4_K.gguf
     volumes:
       - /tmp:/app/uploads
-      - ${MODEL_DIR}:/app/models
+#      - ${MODEL_DIR}:/app/models
     ports:
       - 8084:8080
 
@@ -50,15 +50,15 @@ services:
     build:
       context: ./ml/lecturer
     environment:
-#      S2T_PATH: openai/whisper-large-v3
-#      SUM_PATH: cointegrated/rut5-base-absum
-      S2T_PATH: /app/models/s2t
-      SUM_PATH: /app/models/sum
+      S2T_PATH: openai/whisper-large-v3
+      SUM_PATH: cointegrated/rut5-base-absum
+#      S2T_PATH: /app/models/s2t
+#      SUM_PATH: /app/models/sum
       CL_PATH: /app/models/fine-tune-bert
       FILE_DIR: /app/uploads
     volumes:
       - /tmp:/app/uploads
-      - ${MODEL_DIR}:/app/models
+#      - ${MODEL_DIR}:/app/models
     ports:
       - 8083:8080
 
