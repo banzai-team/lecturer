@@ -121,7 +121,7 @@ const LecturePage: React.FC = () => {
                     </Box>
 
                     <Paper
-                        sx={{p: 3, minHeight: "200px", display: "flex"}}
+                        sx={{p: 8, minHeight: "200px", display: "flex"}} variant="outlined"
                     >
                         {
                             text?.length > 0
