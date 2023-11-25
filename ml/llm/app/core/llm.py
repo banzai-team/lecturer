@@ -30,4 +30,4 @@ prompt = PromptTemplate(template=template, input_variables=["content"])
 
 
 def interact(text):
-    llm.invoke(prompt.format(content=text))
+    return llm.invoke(prompt.format(content=text))
