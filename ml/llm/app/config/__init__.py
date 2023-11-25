@@ -1,1 +1,1 @@
-from .config import S2T_PATH
+from .config import MODEL_PATH
