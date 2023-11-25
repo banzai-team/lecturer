@@ -121,11 +121,18 @@ const LecturePage: React.FC = () => {
                     </Box>
 
                     <Paper
-                        sx={{p: 3}}
+                        sx={{p: 3, minHeight: "200px", display: "flex"}}
                     >
-                        <Typography paragraph align="justify">
-                            {text}
-                        </Typography>
+                        {
+                            text?.length > 0
+                                ? <Typography paragraph align="justify" m={0}>
+                                    {text}
+                                </Typography>
+                                : <Box sx={{ alignSelf: "center", margin: "0 auto" }}>
+                                    <CircularProgress size="30px" />
+                                </Box>
+
+                        }
                     </Paper>
                 </Box>
                 <SideBlock
