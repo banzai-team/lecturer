@@ -26,5 +26,8 @@ def get_status(task_id):
     if task_result.children: 
         result['s2t'] = task_result.children[0].status
         if (task_result.children[0].children):
-            result['group'] = [r.status for r in task_result.children[0].children[0].results]
+            result['terms'] = task_result.children[0].children[0].results[1].status
+            result['llm'] = task_result.children[0].children[0].results[2].status
+            result['summarize'] = task_result.children[0].children[0].results[3].status
+            # result['group'] = [r.status for r in task_result.children[0].children[0].results]
     return JSONResponse(result)
