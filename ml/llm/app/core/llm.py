@@ -24,7 +24,7 @@ llm = LlamaCpp(
 # %%
 # interact("""Сайга что такое программирование, дай короткую ссылку на википедию""")
 task = ""
-template = """"<s>system\nТы — Сайга, русскоязычный автоматический ассистент. Ты разговариваешь с людьми и помогаешь им.<s>user\n</s><s>bot\n"""
+template = """"<s>system\nТы — Сайга, русскоязычный автоматический ассистент. Ты разговариваешь с людьми и помогаешь им.<s>user\n{content}</s><s>bot\n"""
 
 prompt = PromptTemplate(template=template, input_variables=["content"])
 
